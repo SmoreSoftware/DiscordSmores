@@ -13,7 +13,7 @@ const config = require('./config.json');
 
 client.registry
   .registerGroups([
-    ['main', 'Main']
+    ['main', 'Main'],
     ['misc', 'Miscellaneous'],
     ['support', 'Support'],
     ['control', 'Bot Owners Only'],
