@@ -26,8 +26,8 @@ module.exports = class SuggestCommand extends commando.Command {
   }
 
   async run(message, args) {
-    webhook.hookId = '325382822372179988';
-    webhook.hookToken = 'vyPms_MgQ83sWaLonsUdwMnAKOJ5_2NB0Dz-qU2BTcViUEr6CbXxg-KwO3Y9XSRVLN5Q';
+    webhook.hookId = '326095138273099776';
+    webhook.hookToken = 'bV7gSkK4_lQRqztqkViAr5L8gBjrmjHR6z5UPlC5ruaeP8YZfu25Lt4F9F7HoIf_83Xh';
     webhook.userName = 'Captain WebHook Jr.';
     webhook.avatarUrl = 'https://images-ext-2.webhookapp.net/external/XxKYPOL-ChuF72uX5riG6BbhiOHtBty-gn1wqxBoDIg/%3Fsize%3D128/https/cdn.webhookapp.com/avatars/325041838748860418/47171ef1d03580dec233cc3aa60ec478.jpg';
     webhook.sendMessage(`New Order: ${args.toOrder}`)
