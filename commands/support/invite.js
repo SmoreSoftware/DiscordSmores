@@ -20,6 +20,6 @@ module.exports = class HQCommand extends commando.Command {
   }
 
   async run(message, args) {
-    message.channel.send(`Here is a link to add me: https://discordapp.com/oauth2/authorize?client_id=${this.client.user.id}&scope=bot&permissions=2146958463`)
+    message.channel.send(`Here is a link to add me: https://discordapp.com/oauth2/authorize?client_id=${this.client.user.id}&scope=bot&permissions=8`)
   }
 };
