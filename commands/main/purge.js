@@ -14,6 +14,13 @@ module.exports = class HQCommand extends commando.Command {
         DESTROY IT!
 			`,
       examples: ['purge'],
+      args: [{
+        key: 'toPurge',
+        label: 'purge',
+        prompt: 'how many messages?',
+        type: 'string',
+        infinite: false
+      }],
       guildOnly: true,
       guarded: true
     })
@@ -25,15 +32,7 @@ module.exports = class HQCommand extends commando.Command {
 
   async run(message, args) {
     message.channel.send("PURGING")
-    let messagecount = parseInt(args[0]);
-    message.channel.fetchMessages({
-        limit: 100
-      })
-      .then(messages => {
-        let msg_array = messages.array();
-        msg_array.length = messagecount + 1;
-        msg_array.map(m => m.delete().catch(console.error));
-      });
+    message.channel.bulkDelete(args.toPurge)
     message.channel.send("PURGE COMPLETE")
   }
 };
