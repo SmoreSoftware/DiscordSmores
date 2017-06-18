@@ -32,7 +32,7 @@ client
   .on('debug', () => console.log)
   .on('ready', () => {
     console.log(`Client ready; logged in as ${client.user.tag} (${client.user.id})`)
-    client.user.setGame('ds.help | v1.0.0')
+    client.user.setGame('ds.help | v0.1.0')
   })
   .on('disconnect', () => console.warn('Disconnected!'))
   .on('reconnecting', () => console.warn('Reconnecting...'))
