@@ -9,7 +9,7 @@ module.exports = class HQCommand extends commando.Command {
       aliases: ['apocalypse'],
       group: 'main',
       memberName: 'purge',
-      description: 'purges the channe;',
+      description: 'purges the channel',
       details: oneLine `
         DESTROY IT!
 			`,
