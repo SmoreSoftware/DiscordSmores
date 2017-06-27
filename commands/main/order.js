@@ -91,10 +91,43 @@ module.exports = class OrderCommand extends commando.Command {
             ]
             chef = chef[Math.floor(Math.random() * chef.length)]
             orderAuth.send(`Your order has been put in the oven by chef ${chef}`)
-            orderAuth.send('Cooking will ')
+            orderAuth.send('Cooking will take 3 minutes.')
+            setTimeout(deliver, 160000)
           }
 
-          function deliver() {}
+          function deliver() {
+            const embed = new Discord.RichEmbed()
+              .setAuthor(`${orderAuth.tag}, (${orderAuth.id})`, `${orderAuth.avatarURL}`)
+              .setTitle('New order:')
+              .setColor(0x0000FF)
+              .addField('Order:', `${args.toOrder}`, true)
+              .addField('Ordered from:', `#${orderChan.name} (${orderChan.id}) in ${orderGuild.name} (${orderGuild.id})`, true)
+              .addField('Note:', `${note}`, false)
+              .setFooter(`Status: Cooked`)
+              .setTimestamp()
+            message.edit({
+              embed: embed
+            })
+            orderAuth.send('Your order has been cooked and will be delivered soon!')
+
+            function getRandomInt2(min, max) {
+              min = Math.ceil(min);
+              max = Math.floor(max);
+              return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
+            }
+            let time2 = getRandomInt2(min, max)
+            time2 += '0000'
+            time2 = parseInt(time)
+            console.log(time2)
+
+            setTimeout(sendToCustomer, time2)
+
+            function sendToCustomer() {
+              message.delete()
+              orderAuth.send('Your order should be arriving now!')
+              orderChan.send(`${orderAuth} Your order has arrived!`)
+            }
+          }
         })
       }
       if (reason === "success") {
@@ -113,7 +146,8 @@ module.exports = class OrderCommand extends commando.Command {
         let orderChan = message.channel
         let orderGuild = message.guild
         message.reply('Your order has been sent to Discord S\'mores! \nPlease note this may take up to 7 minutes to cook and deliver')
-        this.client.channels.get('329303695407841280').send({
+        let ordersChan = this.client.channels.get('329303695407841280')
+        ordersChan.send({
           embed: embed
         }).then((message) => {
 
@@ -154,10 +188,43 @@ module.exports = class OrderCommand extends commando.Command {
             ]
             chef = chef[Math.floor(Math.random() * chef.length)]
             orderAuth.send(`Your order has been put in the oven by chef ${chef}`)
-            orderAuth.send('Cooking will ')
+            orderAuth.send('Cooking will take 3 minutes.')
+            setTimeout(deliver, 160000)
           }
 
-          function deliver() {}
+          function deliver() {
+            const embed = new Discord.RichEmbed()
+              .setAuthor(`${orderAuth.tag}, (${orderAuth.id})`, `${orderAuth.avatarURL}`)
+              .setTitle('New order:')
+              .setColor(0x0000FF)
+              .addField('Order:', `${args.toOrder}`, true)
+              .addField('Ordered from:', `#${orderChan.name} (${orderChan.id}) in ${orderGuild.name} (${orderGuild.id})`, true)
+              .addField('Note:', `${note}`, false)
+              .setFooter(`Status: Cooked`)
+              .setTimestamp()
+            message.edit({
+              embed: embed
+            })
+            orderAuth.send('Your order has been cooked and will be delivered soon!')
+
+            function getRandomInt2(min, max) {
+              min = Math.ceil(min);
+              max = Math.floor(max);
+              return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
+            }
+            let time2 = getRandomInt2(min, max)
+            time2 += '0000'
+            time2 = parseInt(time)
+            console.log(time2)
+
+            setTimeout(sendToCustomer, time2)
+
+            function sendToCustomer() {
+              message.delete()
+              orderAuth.send('Your order should be arriving now!')
+              orderChan.send(`${orderAuth} Your order has arrived!`)
+            }
+          }
         })
       }
     })
