@@ -32,5 +32,6 @@ module.exports = class SuggestCommand extends commando.Command {
       .setFooter(`Order from: ${message.author.username} in ${message.guild.name}`)
       .setTimestamp()
     this.client.channels.get('329303695407841280').send({embed: embed})
+    message.reply("Your order has been sent to Discord S'mores!\nPlease note this may take up to 5 minutes to cook and deliver")
   }
 };
