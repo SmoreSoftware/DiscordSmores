@@ -46,10 +46,56 @@ module.exports = class OrderCommand extends commando.Command {
           .addField('Note:', `[No note left.]`, false)
           .setFooter(`Status: Awaiting a cook`)
           .setTimestamp()
+        let orderAuth = message.author
+        let orderChan = message.channel
+        let orderGuild = message.guild
+        message.reply('Your order has been sent to Discord S\'mores! \nPlease note this may take up to 7 minutes to cook and deliver')
         this.client.channels.get('329303695407841280').send({
           embed: embed
+        }).then((message) => {
+
+          let min = 1
+          let max = 3
+
+          function getRandomInt(min, max) {
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
+          }
+
+          let time = getRandomInt(min, max)
+          time += '0000'
+          time = parseInt(time)
+          console.log(time)
+          setTimeout(cook, time)
+
+          function cook() {
+            const embed = new Discord.RichEmbed()
+              .setAuthor(`${orderAuth.tag}, (${orderAuth.id})`, `${orderAuth.avatarURL}`)
+              .setTitle('New order:')
+              .setColor(0x0000FF)
+              .addField('Order:', `${args.toOrder}`, true)
+              .addField('Ordered from:', `#${orderChan.name} (${orderChan.id}) in ${orderGuild.name} (${orderGuild.id})`, true)
+              .addField('Note:', `${note}`, false)
+              .setFooter(`Status: Cooking`)
+              .setTimestamp()
+            message.edit({
+              embed: embed
+            })
+
+            let chef = ['Bob#1234',
+              'MellissaGamer#4076',
+              'ILoveSmores#3256',
+              'CoolDeveloper#4035',
+              'YoMomma#9693'
+            ]
+            chef = chef[Math.floor(Math.random() * chef.length)]
+            orderAuth.send(`Your order has been put in the oven by chef ${chef}`)
+            orderAuth.send('Cooking will ')
+          }
+
+          function deliver() {}
         })
-        message.reply('Your order has been sent to Discord S\'mores! \nPlease note this may take up to 5 minutes to cook and deliver')
       }
       if (reason === "success") {
         let note = collected.first()
@@ -63,10 +109,56 @@ module.exports = class OrderCommand extends commando.Command {
           .addField('Note:', `${note}`, false)
           .setFooter(`Status: Awaiting a cook`)
           .setTimestamp()
+        let orderAuth = message.author
+        let orderChan = message.channel
+        let orderGuild = message.guild
+        message.reply('Your order has been sent to Discord S\'mores! \nPlease note this may take up to 7 minutes to cook and deliver')
         this.client.channels.get('329303695407841280').send({
           embed: embed
+        }).then((message) => {
+
+          let min = 1
+          let max = 3
+
+          function getRandomInt(min, max) {
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
+          }
+
+          let time = getRandomInt(min, max)
+          time += '0000'
+          time = parseInt(time)
+          console.log(time)
+          setTimeout(cook, time)
+
+          function cook() {
+            const embed = new Discord.RichEmbed()
+              .setAuthor(`${orderAuth.tag}, (${orderAuth.id})`, `${orderAuth.avatarURL}`)
+              .setTitle('New order:')
+              .setColor(0x0000FF)
+              .addField('Order:', `${args.toOrder}`, true)
+              .addField('Ordered from:', `#${orderChan.name} (${orderChan.id}) in ${orderGuild.name} (${orderGuild.id})`, true)
+              .addField('Note:', `${note}`, false)
+              .setFooter(`Status: Cooking`)
+              .setTimestamp()
+            message.edit({
+              embed: embed
+            })
+
+            let chef = ['Bob#1234',
+              'MellissaGamer#4076',
+              'ILoveSmores#3256',
+              'CoolDeveloper#4035',
+              'YoMomma#9693'
+            ]
+            chef = chef[Math.floor(Math.random() * chef.length)]
+            orderAuth.send(`Your order has been put in the oven by chef ${chef}`)
+            orderAuth.send('Cooking will ')
+          }
+
+          function deliver() {}
         })
-        message.reply('Your order has been sent to Discord S\'mores! \nPlease note this may take up to 5 minutes to cook and deliver')
       }
     })
   }
