@@ -6,7 +6,7 @@ module.exports = class HQCommand extends commando.Command {
   constructor(client) {
     super(client, {
       name: 'purge',
-      aliases: ['apocalypse'],
+      aliases: ['apocalypse', `prune`],
       group: 'main',
       memberName: 'purge',
       description: 'purges the channel',
@@ -32,7 +32,7 @@ module.exports = class HQCommand extends commando.Command {
 
   async run(message, args) {
     message.channel.send("PURGING")
-    message.channel.bulkDelete(args.toPurge)
-    message.channel.send("PURGE COMPLETE")
+    message.channel.bulkDelete(args.toPurge+2)
+    await message.channel.send("PURGE COMPLETE")
   }
 };
