@@ -31,6 +31,6 @@ module.exports = class SuggestCommand extends commando.Command {
       .setDescription(`${args.toOrder}`)
       .setFooter(`Order from: ${message.author.username} in ${message.guild.name}`)
       .setTimestamp()
-    this.client.channels.get("326122391707320331").send("", { embed })
+    this.client.channels.get('329303695407841280').send({embed: embed})
   }
 };
