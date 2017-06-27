@@ -5,7 +5,7 @@ module.exports = class HQCommand extends commando.Command {
   constructor(client) {
     super(client, {
       name: 'hq',
-      aliases: ['server', 'helpserver', 'officialserver', 'devsserevr'],
+      aliases: ['server', 'helpserver', 'officialserver', 'devsserver'],
       group: 'support',
       memberName: 'hq',
       description: 'Sends an invite to the official SmoreSoftware Discord!',
