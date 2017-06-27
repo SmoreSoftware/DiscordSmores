@@ -2,7 +2,7 @@ const commando = require('discord.js-commando');
 const oneLine = require('common-tags').oneLine;
 const client = require(`discord.js`)
 
-module.exports = class HQCommand extends commando.Command {
+module.exports = class PurgeCommand extends commando.Command {
   constructor(client) {
     super(client, {
       name: 'purge',
@@ -32,7 +32,7 @@ module.exports = class HQCommand extends commando.Command {
 
   async run(message, args) {
     message.channel.send("PURGING")
-    message.channel.bulkDelete(args.toPurge+2)
+    message.channel.bulkDelete(args.toPurge + 2)
     await message.channel.send("PURGE COMPLETE")
   }
 };
