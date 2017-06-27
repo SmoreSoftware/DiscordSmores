@@ -87,7 +87,13 @@ module.exports = class OrderCommand extends commando.Command {
               'MellissaGamer#4076',
               'ILoveSmores#3256',
               'CoolDeveloper#4035',
-              'YoMomma#9693'
+              'YoMomma#9693',
+              `SpaceX#0276`,
+              `jdenderplays#2316`,
+              `ROM Typo#9462`,
+              `TJDoesCode#6088`,
+              `Chronomly6#8108`,
+              `SmoreBot#0560`,
             ]
             chef = chef[Math.floor(Math.random() * chef.length)]
             orderAuth.send(`Your order has been put in the oven by chef ${chef}`)
@@ -184,7 +190,13 @@ module.exports = class OrderCommand extends commando.Command {
               'MellissaGamer#4076',
               'ILoveSmores#3256',
               'CoolDeveloper#4035',
-              'YoMomma#9693'
+              'YoMomma#9693',
+              `SpaceX#0276`,
+              `jdenderplays#2316`,
+              `ROM Typo#9462`,
+              `TJDoesCode#6088`,
+              `Chronomly6#8108`,
+              `SmoreBot#0560`,
             ]
             chef = chef[Math.floor(Math.random() * chef.length)]
             orderAuth.send(`Your order has been put in the oven by chef ${chef}`)
