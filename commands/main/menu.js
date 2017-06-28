@@ -22,7 +22,9 @@ module.exports = class HQCommand extends commando.Command {
     const embed = new Discord.RichEmbed()
       .setAuthor(`Menu`, `${this.client.user.avatarURL}`)
       .setColor(0x0000FF)
-      .setDescription(`__**Menu**__\n*S\'mores- Any kind of S\'mores\nDonuts - Any kind of Donuts*\n__**Drinks**__\n*Coffee - Any flavor of coffee\nMilk - milk duh.\nWater - Basic, Normal, Water.*`)
+      .addField('**S\'mores**', `\n**1)** Golden brown s\'mores \n**2)** Slightly gooey s\'mores \n**3)** Very gooey s\'mores \n**4)** Charred s\'mores \n**5)** Chef\'s choice`, true)
+      .addField('**Donuts**', `\n**1)** Glazed donut \n**2)** Chocolate donut \n**3)** Strawberry donut \n**4)** Lemon filled eclair \n**5)** Chef\'s choice`, true)
+      .addField('**Drinks**', `\n**1)** Coffee - Any flavor of coffee\n**2)** Milk - milk duh\n**3)** Water - Basic, Normal, Water`, false)
       .setFooter(`Requested by: ${message.author.username}`)
       .setTimestamp()
     await message.channel.send({
@@ -30,4 +32,3 @@ module.exports = class HQCommand extends commando.Command {
     })
   }
 };
-
