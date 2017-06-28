@@ -25,6 +25,8 @@ module.exports = class OrderCommand extends commando.Command {
   }
 
   async run(message, args) {
+    let menu = ['smores', 's\'mores', 'smore', 's\'more', 'donut', 'donuts']
+    if (!menu.includes(args.toOrder) || args.toOrder.includes('smore')) return message.reply(`Please order a menu item! Do \`${message.guild.commandPrefix}menu\` to see the menu.`)
     const collector = message.channel.createCollector(msg => msg.author === message.author, {
       time: 30000
     })
@@ -232,9 +234,37 @@ module.exports = class OrderCommand extends commando.Command {
             setTimeout(sendToCustomer, time2)
 
             function sendToCustomer() {
+              let smores = ['https://busyfoodie.files.wordpress.com/2015/02/dsc01984.jpg',
+                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-n2VlKwdEbHH9xbRh_LZAhjCVa9VFspdIGzHNJyzT6YatArSE2Q',
+                'https://cdn.farmersalmanac.com/wp-content/uploads/2013/08/mmm-smore-420x240.jpg',
+                'http://cookingwithcurls.com/wp-content/uploads/2015/07/Outdoor-Smores-with-Homemade-Peanut-Butter-perfectly-charred-marshmallows-and-Hersheys-chocolate-bars-cookingwithcurls.com-LetsMakeSmores-Ad.jpg',
+                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUK6T-2tPjXpgs9cITVGxqsQ4nRQ-jSDh-QCgrlPsdclA2W5rg https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9KNWVBLj6Ds0ay0KVqQ-ei6n5o9a-aITuBdGb8QUpI7-MXK9r'
+              ]
+              let donuts = []
+              let drinks = []
+
               message.delete()
               orderAuth.send('Your order should be arriving now!')
-              orderChan.send(`${orderAuth} Your order has arrived!`)
+              if (args.toOrder.toLowerCase().includes('golden') || args.toOrder.toLowerCase().includes('smore 1')) {
+                orderChan.send(`${orderAuth} Your order has arrived!`)
+                orderChan.send(smores[0])
+              } else if (args.toOrder.toLowerCase().includes('slightly gooey') || args.toOrder.toLowerCase().includes('smore 2')) {
+                orderChan.send(`${orderAuth} Your order has arrived!`)
+                orderChan.send(smores[1])
+              } else if (args.toOrder.toLowerCase().includes('very gooey') || args.toOrder.toLowerCase().includes('smore 3')) {
+                orderChan.send(`${orderAuth} Your order has arrived!`)
+                orderChan.send(smores[2])
+              } else if (args.toOrder.toLowerCase().includes('charred') || args.toOrder.toLowerCase().includes('smore 4')) {
+                orderChan.send(`${orderAuth} Your order has arrived!`)
+                orderChan.send(smores[3])
+              } else if (args.toOrder.toLowerCase().includes('radioactive') || args.toOrder.toLowerCase().includes('smore 5')) {
+                orderChan.send(`${orderAuth} Your order has arrived!`)
+                orderChan.send(smores[4])
+              } else if (args.toOrder.toLowerCase().includes('chef\'s choice') || args.toOrder.toLowerCase().includes('chefs choice') || args.toOrder.toLowerCase().includes('smore 6')) {
+                smores = smores[Math.floor(Math.random() * smores.length)]
+                orderChan.send(`${orderAuth} Your order has arrived!`)
+                orderChan.send(smores)
+              }
             }
           }
         })
