@@ -32,7 +32,9 @@ module.exports = class PurgeCommand extends commando.Command {
 
   async run(message, args) {
     message.channel.send("PURGING")
-    message.channel.bulkDelete(args.toPurge + 2)
-    await message.channel.send("PURGE COMPLETE")
+    message.channel.bulkDelete(args.toPurge)
+      .then(() => {
+        message.channel.send("PURGE COMPLETE")
+      })
   }
 };
