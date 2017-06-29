@@ -1,5 +1,6 @@
 # CONFIG JSON'S
 *.json
+*.JSON
 
 #Settigs db
 settings.sqlite3
@@ -66,3 +67,6 @@ typings/
 # dotenv environment variables file
 .env
 
+#eslint configs
+.eslintrc.*
+.eslintrc

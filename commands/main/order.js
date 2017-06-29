@@ -179,7 +179,7 @@ module.exports = class OrderCommand extends commando.Command {
           time += '0000'
           time = parseInt(time)
           console.log(time)
-          setTimeout(cook, time)
+          setTimeout(cook, 0) //time)
 
           function cook() {
             const embed = new Discord.RichEmbed()
@@ -210,7 +210,7 @@ module.exports = class OrderCommand extends commando.Command {
             chef = chef[Math.floor(Math.random() * chef.length)]
             orderAuth.send(`Your order has been put in the oven by chef ${chef}`)
             orderAuth.send('Cooking will take 3 minutes.')
-            setTimeout(deliver, 160000)
+            setTimeout(deliver, 0) //160000)
           }
 
           function deliver() {
@@ -238,7 +238,7 @@ module.exports = class OrderCommand extends commando.Command {
             time2 = parseInt(time)
             console.log(time2)
 
-            setTimeout(sendToCustomer, time2)
+            setTimeout(sendToCustomer, 0) //time2)
 
             function sendToCustomer() {
               let smores = ['https://busyfoodie.files.wordpress.com/2015/02/dsc01984.jpg',
@@ -252,22 +252,22 @@ module.exports = class OrderCommand extends commando.Command {
 
               message.delete()
               orderAuth.send('Your order should be arriving now!')
-              if (args.toOrder.toLowerCase().includes('golden') || args.toOrder.toLowerCase().includes('smore 1')) {
+              if (args.toOrder.toLowerCase().includes('smore 1') || args.toOrder.toLowerCase().includes('s\'more 1') || args.toOrder.toLowerCase().includes('smores 1') || args.toOrder.toLowerCase().includes('s\'mores 1')) {
                 orderChan.send(`${orderAuth} Your order has arrived!`)
                 orderChan.send(smores[0])
-              } else if (args.toOrder.toLowerCase().includes('slightly gooey') || args.toOrder.toLowerCase().includes('smore 2')) {
+              } else if (args.toOrder.toLowerCase().includes('smore 2') || args.toOrder.toLowerCase().includes('s\'more 2') || args.toOrder.toLowerCase().includes('smores 2') || args.toOrder.toLowerCase().includes('s\'mores 2')) {
                 orderChan.send(`${orderAuth} Your order has arrived!`)
                 orderChan.send(smores[1])
-              } else if (args.toOrder.toLowerCase().includes('very gooey') || args.toOrder.toLowerCase().includes('smore 3')) {
+              } else if (args.toOrder.toLowerCase().includes('smore 3') || args.toOrder.toLowerCase().includes('s\'more 3') || args.toOrder.toLowerCase().includes('smores 3') || args.toOrder.toLowerCase().includes('s\'mores 3')) {
                 orderChan.send(`${orderAuth} Your order has arrived!`)
                 orderChan.send(smores[2])
-              } else if (args.toOrder.toLowerCase().includes('charred') || args.toOrder.toLowerCase().includes('smore 4')) {
+              } else if (args.toOrder.toLowerCase().includes('smore 4') || args.toOrder.toLowerCase().includes('s\'more 4') || args.toOrder.toLowerCase().includes('smores 4') || args.toOrder.toLowerCase().includes('s\'mores 4')) {
                 orderChan.send(`${orderAuth} Your order has arrived!`)
                 orderChan.send(smores[3])
-              } else if (args.toOrder.toLowerCase().includes('radioactive') || args.toOrder.toLowerCase().includes('smore 5')) {
+              } else if (args.toOrder.toLowerCase().includes('smore 5') || args.toOrder.toLowerCase().includes('s\'more 5') || args.toOrder.toLowerCase().includes('smores 5') || args.toOrder.toLowerCase().includes('s\'mores 5')) {
                 orderChan.send(`${orderAuth} Your order has arrived!`)
                 orderChan.send(smores[4])
-              } else if (args.toOrder.toLowerCase().includes('chef\'s choice') || args.toOrder.toLowerCase().includes('chefs choice') || args.toOrder.toLowerCase().includes('smore 6')) {
+              } else if (args.toOrder.toLowerCase().includes('smore 6') || args.toOrder.toLowerCase().includes('s\'more 6') || args.toOrder.toLowerCase().includes('smores 6') || args.toOrder.toLowerCase().includes('s\'mores 6')) {
                 smores = smores[Math.floor(Math.random() * smores.length)]
                 orderChan.send(`${orderAuth} Your order has arrived!`)
                 orderChan.send(smores)
