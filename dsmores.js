@@ -1,7 +1,8 @@
 const commando = require('discord.js-commando');
+const config = require('./config.json');
 const client = new commando.Client({
   owner: ['197891949913571329', '251383432331001856'],
-  commandPrefix: 'ds.',
+  commandPrefix: config.prefix,
   unknownCommandResponse: false
 });
 let Discord = require('discord.js');
@@ -9,7 +10,6 @@ let Discord = require('discord.js');
 const path = require('path');;
 const sqlite = require('sqlite');
 const oneLine = require('common-tags').oneLine;
-const config = require('./config.json');
 
 client.registry
   .registerGroups([
