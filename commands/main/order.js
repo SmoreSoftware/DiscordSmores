@@ -1,3 +1,4 @@
+//eslint-disable-next-line
 const commando = require('discord.js-commando');
 const oneLine = require('common-tags').oneLine;
 const Discord = require('discord.js');
@@ -30,6 +31,7 @@ module.exports = class OrderCommand extends commando.Command {
     I'm bad, get over it
     Also please do stone me to death I would gladly be put out of my misery
     Life is misery, existance is pain*/
+
     let menu = ['smores 1', 's\'mores 1', 'smore 1', 's\'more 1', 'smores 2', 's\'mores 2', 'smore 2', 's\'more 2', 'smores 3', 's\'mores 3', 'smore 3', 's\'more 3', 'smores 4', 's\'mores 4', 'smore 4', 's\'more 4',
       'smores 5', 's\'mores 5', 'smore 5', 's\'more 5', 'smores 6', 's\'mores 6', 'smore 6', 's\'more 6', 'donut 1', 'donuts 1', 'donut 2', 'donuts 2', 'donut 3', 'donuts 3', 'donut 4', 'donuts 4', 'donut 5', 'donuts 5',
       'donut 6', 'donuts 6', 'donut 7', 'donuts 7', 'drink 1', 'drinks 1', 'beverage 1', 'beverages 1', 'drink 2', 'drinks 2', 'beverage 2', 'beverages 2', 'drink 3', 'drinks 3', 'beverage 3', 'beverages 3', 'drink 4',
@@ -270,7 +272,12 @@ module.exports = class OrderCommand extends commando.Command {
                 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQhcFw5Sr7IwsvV2U2UqjIV24JG59CLWwGW6Bk7EEETkNVaWNT9IA',
                 'https://s-media-cache-ak0.pinimg.com/736x/d3/f6/06/d3f6068348a5c3e3d23ef8678cfa990e--single-quotes-funny-single-life-humor.jpg'
               ]
-              let drinks = []
+              let drinks = ['https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRAwI9Db5c-fxdBiWn-ErVO2m3zzp96Cdgtv8f2iznymYhrK8CZcQ',
+                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOTLkelJm9DpeR-7vXPejvhJCscxoGU6krzow-zHI-ZWcuFF5csQ',
+                'http://www.newhealthadvisor.com/images/1HT19185/soy-milk.gif',
+                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRx3XE9LKfTGrppEV0oMcAejRwqAwMDAgOqEVDqtrwSVavqM0CDpA',
+                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQhtwJK3rKLac82kKQJIqsOH9vW43aH4BK6v5tkP90uBUn3UylbevOXDpc'
+              ]
 
               message.delete()
               orderAuth.send('Your order should be arriving now!')
@@ -331,7 +338,8 @@ module.exports = class OrderCommand extends commando.Command {
                 orderChan.send(`${orderAuth} Your order has arrived!`)
                 orderChan.send(drinks[4])
               } else {
-                orderChan.send(`${orderAuth} Your order had an issue and has not arrieved properly.`)
+                orderChan.send(`${orderAuth} Your order had an issue and has not arrived properly.`)
+                orderChan.send(`Do \`${message.guild.commandPrefix}hq\` to get a list of ways to contact the developers.`)
               }
             }
           }
