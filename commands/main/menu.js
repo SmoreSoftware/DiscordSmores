@@ -6,7 +6,7 @@ module.exports = class MenuCommand extends commando.Command {
   constructor(client) {
     super(client, {
       name: 'menu',
-      aliases: [`itemlist`],
+      aliases: ['itemlist'],
       group: 'main',
       memberName: 'menu',
       description: 'Lists items you can order',
@@ -18,13 +18,15 @@ module.exports = class MenuCommand extends commando.Command {
     })
   }
 
-  async run(message, args) {
+  async run(message) {
     const embed = new Discord.RichEmbed()
-      .setAuthor(`Menu`, `${this.client.user.avatarURL}`)
+      .setAuthor('Menu', `${this.client.user.avatarURL}`)
       .setColor(0x0000FF)
-      .addField('**S\'mores**', `\n**1)** Golden brown s\'mores \n**2)** Slightly gooey s\'mores \n**3)** Very gooey s\'mores \n**4)** Charred s\'mores \n**5)** Radioactive s\'mores \n**6)** Chef\'s choice`, true)
-      .addField('**Donuts**', `\n**1)** Glazed donut \n**2)** Chocolate donut \n**3)** Strawberry donut \n**4)** Lemon filled eclair \n**5)** Maple bacon donut \n**6)** Meme donut \n**7)** Chef\'s choice`, true)
-      .addField('**Drinks**', `\n**1)** Coffee - Any flavor of coffee\n**2)** Milk - milk duh\n**3)** Water - Basic, Normal, Water`, false)
+      //eslint-disable-next-line no-useless-escape
+      .setDescription(`Order by doing \`${message.guild.commandPrefix}order <group> <item number>\`. For example: \`${message.guild.commandPrefix}order smore 2\` to order slightly gooey s\'mores.`)
+      .addField('**S\'mores**', '\n**1)** Golden brown s\'mores \n**2)** Slightly gooey s\'mores \n**3)** Very gooey s\'mores \n**4)** Charred s\'mores \n**5)** Radioactive s\'mores \n**6)** Chef\'s choice', true)
+      .addField('**Donuts**', '\n**1)** Glazed donut \n**2)** Chocolate donut \n**3)** Strawberry donut \n**4)** Lemon filled eclair \n**5)** Maple bacon donut \n**6)** Meme donut \n**7)** Chef\'s choice', true)
+      .addField('**Drinks**', '\n**1)** Coffee - Any flavor of coffee\n**2)** Milk - milk duh\n**3)** Water - Basic, Normal, Water', false)
       .setFooter(`Requested by: ${message.author.username}`)
       .setTimestamp()
     await message.channel.send({

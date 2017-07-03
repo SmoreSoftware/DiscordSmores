@@ -48,20 +48,23 @@ module.exports = class SettingsCommand extends commando.Command {
 
   hasPermission(msg) {
     if (!msg.guild) return this.client.isOwner(msg.author);
+
     return msg.member.hasPermission('ADMINISTRATOR');
   }
 
+  //eslint-disable-next-line class-methods-use-this
   async run(message, args) {
     if (args.action.toLowerCase() === 'add') {
       if (args.setting.toLowerCase() === 'starboard') {
         const rawChan = message.mentions.channels.first()
-        if (!rawChan) return message.reply("Please specify a channel to set as the starboard!")
+        if (!rawChan) return message.reply('Please specify a channel to set as the starboard!')
         const chanToLog = rawChan.id
         message.guild.settings.set('starboard', chanToLog)
         message.reply(`Set the starboard to "<#${message.guild.settings.get('starboard')}>"`)
       } else {
         message.reply('That\'s not a setting. Please try again.');
       }
+      //eslint-disable-next-line no-empty
     } else if (args.action.toLowerCase() === 'view') {
 
     } else {

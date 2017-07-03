@@ -1,12 +1,11 @@
 const commando = require('discord.js-commando');
 const oneLine = require('common-tags').oneLine;
-const client = require(`discord.js`)
 
 module.exports = class PurgeCommand extends commando.Command {
   constructor(client) {
     super(client, {
       name: 'purge',
-      aliases: ['apocalypse', `prune`],
+      aliases: ['apocalypse', 'prune'],
       group: 'main',
       memberName: 'purge',
       description: 'purges the channel',
@@ -26,15 +25,17 @@ module.exports = class PurgeCommand extends commando.Command {
     })
   }
 
+  //eslint-disable-next-line class-methods-use-this
   hasPermission(msg) {
     return msg.member.hasPermission('MANAGE_MESSAGES');
   }
 
+  //eslint-disable-next-line class-methods-use-this
   async run(message, args) {
-    message.channel.send("PURGING")
+    message.channel.send('PURGING')
     message.channel.bulkDelete(args.toPurge)
       .then(() => {
-        message.channel.send("PURGE COMPLETE 🔥")
+        message.channel.send('PURGE COMPLETE 🔥')
       })
   }
 };

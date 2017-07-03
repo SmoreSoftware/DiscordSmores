@@ -25,6 +25,7 @@ module.exports = class SuggestCommand extends commando.Command {
     })
   }
 
+  //eslint-disable-next-line class-methods-use-this
   async run(message, args) {
     const embed = new Discord.RichEmbed()
       .setAuthor(`${message.author.tag}`, `${message.author.avatarURL}`)

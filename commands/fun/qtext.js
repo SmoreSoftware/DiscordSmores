@@ -1,6 +1,5 @@
 const commando = require('discord.js-commando');
 const oneLine = require('common-tags').oneLine;
-const Discord = require('discord.js');
 
 module.exports = class SuggestCommand extends commando.Command {
   constructor(client) {
@@ -25,15 +24,16 @@ module.exports = class SuggestCommand extends commando.Command {
     })
   }
 
-  async run(message, args) {
-    let toQbert = message.content.split(" ").slice(1).join(" ")
+  //eslint-disable-next-line class-methods-use-this
+  async run(message) {
+    //eslint-disable-next-line newline-per-chained-call
+    let toQbert = message.content.split(' ').slice(1).join(' ')
 
     function randomtext() {
-      let text = "";
-      let possible = "@#%><?!&^+=";
+      let text = '';
+      let possible = '@#%><?!&^+=';
 
-      for (var i = 0; i < toQbert.length; i++)
-        text += possible.charAt(Math.floor(Math.random() * possible.length));
+      for (let i = 0;i < toQbert.length;i++) text += possible.charAt(Math.floor(Math.random() * possible.length));
 
       return text;
     }

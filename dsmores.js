@@ -66,6 +66,7 @@ client
 			${guild ? `in guild ${guild.name} (${guild.id})` : 'globally'}.
 		`);
   })
+  //eslint-disable-next-line
   .on('commandRun', (command, promise, msg, args) => {
     if (msg.guild) {
       console.log(`Command ran
