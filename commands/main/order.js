@@ -38,6 +38,10 @@ module.exports = class OrderCommand extends commando.Command {
       'drinks 4', 'beverage 4', 'beverages 4', 'drink 5', 'drinks 5', 'beverage 5', 'beverages 5'
     ]
     if (!menu.includes(args.toOrder.toLowerCase())) return message.reply(`Please order a menu item! Do \`${message.guild.commandPrefix}menu\` to see the menu.`)
+    let activeOrders = []
+    //eslint-disable-next-line no-unused-expressions
+    activeOrders[message.author.id]
+    if (activeOrders.includes(message.author.id)) return message.reply('You already have an order!')
     const collector = message.channel.createCollector(msg => msg.author === message.author, {
       time: 30000
     })
@@ -172,62 +176,100 @@ module.exports = class OrderCommand extends commando.Command {
               if (args.toOrder.toLowerCase().includes('smore 1') || args.toOrder.toLowerCase().includes('s\'more 1') || args.toOrder.toLowerCase().includes('smores 1') || args.toOrder.toLowerCase().includes('s\'mores 1')) {
                 orderChan.send(`${orderAuth} Your order has arrived!`)
                 orderChan.send(smores[0])
+                //eslint-disable-next-line prefer-reflect
+                delete activeOrders[message.author.id]
               } else if (args.toOrder.toLowerCase().includes('smore 2') || args.toOrder.toLowerCase().includes('s\'more 2') || args.toOrder.toLowerCase().includes('smores 2') || args.toOrder.toLowerCase().includes('s\'mores 2')) {
                 orderChan.send(`${orderAuth} Your order has arrived!`)
                 orderChan.send(smores[1])
+                //eslint-disable-next-line prefer-reflect
+                delete activeOrders[message.author.id]
               } else if (args.toOrder.toLowerCase().includes('smore 3') || args.toOrder.toLowerCase().includes('s\'more 3') || args.toOrder.toLowerCase().includes('smores 3') || args.toOrder.toLowerCase().includes('s\'mores 3')) {
                 orderChan.send(`${orderAuth} Your order has arrived!`)
                 orderChan.send(smores[2])
+                //eslint-disable-next-line prefer-reflect
+                delete activeOrders[message.author.id]
               } else if (args.toOrder.toLowerCase().includes('smore 4') || args.toOrder.toLowerCase().includes('s\'more 4') || args.toOrder.toLowerCase().includes('smores 4') || args.toOrder.toLowerCase().includes('s\'mores 4')) {
                 orderChan.send(`${orderAuth} Your order has arrived!`)
                 orderChan.send(smores[3])
+                //eslint-disable-next-line prefer-reflect
+                delete activeOrders[message.author.id]
               } else if (args.toOrder.toLowerCase().includes('smore 5') || args.toOrder.toLowerCase().includes('s\'more 5') || args.toOrder.toLowerCase().includes('smores 5') || args.toOrder.toLowerCase().includes('s\'mores 5')) {
                 orderChan.send(`${orderAuth} Your order has arrived!`)
                 orderChan.send(smores[4])
+                //eslint-disable-next-line prefer-reflect
+                delete activeOrders[message.author.id]
               } else if (args.toOrder.toLowerCase().includes('smore 6') || args.toOrder.toLowerCase().includes('s\'more 6') || args.toOrder.toLowerCase().includes('smores 6') || args.toOrder.toLowerCase().includes('s\'mores 6')) {
                 smores = smores[Math.floor(Math.random() * smores.length)]
                 orderChan.send(`${orderAuth} Your order has arrived!`)
                 orderChan.send(smores)
+                //eslint-disable-next-line prefer-reflect
+                delete activeOrders[message.author.id]
               } else if (args.toOrder.toLowerCase().includes('donut 1') || args.toOrder.toLowerCase().includes('donuts 1')) {
                 orderChan.send(`${orderAuth} Your order has arrived!`)
                 orderChan.send(donuts[0])
+                //eslint-disable-next-line prefer-reflect
+                delete activeOrders[message.author.id]
               } else if (args.toOrder.toLowerCase().includes('donut 2') || args.toOrder.toLowerCase().includes('donuts 2')) {
                 orderChan.send(`${orderAuth} Your order has arrived!`)
                 orderChan.send(donuts[1])
+                //eslint-disable-next-line prefer-reflect
+                delete activeOrders[message.author.id]
               } else if (args.toOrder.toLowerCase().includes('donut 3') || args.toOrder.toLowerCase().includes('donuts 3')) {
                 orderChan.send(`${orderAuth} Your order has arrived!`)
                 orderChan.send(donuts[2])
+                //eslint-disable-next-line prefer-reflect
+                delete activeOrders[message.author.id]
               } else if (args.toOrder.toLowerCase().includes('donut 4') || args.toOrder.toLowerCase().includes('donuts 4')) {
                 orderChan.send(`${orderAuth} Your order has arrived!`)
                 orderChan.send(donuts[3])
+                //eslint-disable-next-line prefer-reflect
+                delete activeOrders[message.author.id]
               } else if (args.toOrder.toLowerCase().includes('donut 5') || args.toOrder.toLowerCase().includes('donuts 5')) {
                 orderChan.send(`${orderAuth} Your order has arrived!`)
                 orderChan.send(donuts[4])
+                //eslint-disable-next-line prefer-reflect
+                delete activeOrders[message.author.id]
               } else if (args.toOrder.toLowerCase().includes('donut 6') || args.toOrder.toLowerCase().includes('donuts 6')) {
                 orderChan.send(`${orderAuth} Your order has arrived!`)
                 orderChan.send(donuts[5])
+                //eslint-disable-next-line prefer-reflect
+                delete activeOrders[message.author.id]
               } else if (args.toOrder.toLowerCase().includes('donut 7') || args.toOrder.toLowerCase().includes('donuts 7')) {
                 donuts = donuts[Math.floor(Math.random() * donuts.length)]
                 orderChan.send(`${orderAuth} Your order has arrived!`)
                 orderChan.send(donuts)
+                //eslint-disable-next-line prefer-reflect
+                delete activeOrders[message.author.id]
               } else if (args.toOrder.toLowerCase().includes('drink 1') || args.toOrder.toLowerCase().includes('drinks 1') || args.toOrder.toLowerCase().includes('beverage 1') || args.toOrder.toLowerCase().includes('beverages 1')) {
                 orderChan.send(`${orderAuth} Your order has arrived!`)
                 orderChan.send(drinks[0])
+                //eslint-disable-next-line prefer-reflect
+                delete activeOrders[message.author.id]
               } else if (args.toOrder.toLowerCase().includes('drink 2') || args.toOrder.toLowerCase().includes('drinks 2') || args.toOrder.toLowerCase().includes('beverage 2') || args.toOrder.toLowerCase().includes('beverages 2')) {
                 orderChan.send(`${orderAuth} Your order has arrived!`)
                 orderChan.send(drinks[1])
+                //eslint-disable-next-line prefer-reflect
+                delete activeOrders[message.author.id]
               } else if (args.toOrder.toLowerCase().includes('drink 3') || args.toOrder.toLowerCase().includes('drinks 3') || args.toOrder.toLowerCase().includes('beverage 3') || args.toOrder.toLowerCase().includes('beverages 3')) {
                 orderChan.send(`${orderAuth} Your order has arrived!`)
                 orderChan.send(drinks[2])
+                //eslint-disable-next-line prefer-reflect
+                delete activeOrders[message.author.id]
               } else if (args.toOrder.toLowerCase().includes('drink 4') || args.toOrder.toLowerCase().includes('drinks 4') || args.toOrder.toLowerCase().includes('beverage 4') || args.toOrder.toLowerCase().includes('beverages 4')) {
                 orderChan.send(`${orderAuth} Your order has arrived!`)
                 orderChan.send(drinks[3])
+                //eslint-disable-next-line prefer-reflect
+                delete activeOrders[message.author.id]
               } else if (args.toOrder.toLowerCase().includes('drink 5') || args.toOrder.toLowerCase().includes('drinks 5') || args.toOrder.toLowerCase().includes('beverage 5') || args.toOrder.toLowerCase().includes('beverages 5')) {
                 orderChan.send(`${orderAuth} Your order has arrived!`)
                 orderChan.send(drinks[4])
+                //eslint-disable-next-line prefer-reflect
+                delete activeOrders[message.author.id]
               } else {
                 orderChan.send(`${orderAuth} Your order had an issue and has not arrived properly.`)
                 orderChan.send(`Do \`${message.guild.commandPrefix}hq\` to get a list of ways to contact the developers.`)
+                //eslint-disable-next-line prefer-reflect
+                delete activeOrders[message.author.id]
               }
             }
           }
@@ -357,62 +399,100 @@ module.exports = class OrderCommand extends commando.Command {
               if (args.toOrder.toLowerCase().includes('smore 1') || args.toOrder.toLowerCase().includes('s\'more 1') || args.toOrder.toLowerCase().includes('smores 1') || args.toOrder.toLowerCase().includes('s\'mores 1')) {
                 orderChan.send(`${orderAuth} Your order has arrived!`)
                 orderChan.send(smores[0])
+                //eslint-disable-next-line prefer-reflect
+                delete activeOrders[message.author.id]
               } else if (args.toOrder.toLowerCase().includes('smore 2') || args.toOrder.toLowerCase().includes('s\'more 2') || args.toOrder.toLowerCase().includes('smores 2') || args.toOrder.toLowerCase().includes('s\'mores 2')) {
                 orderChan.send(`${orderAuth} Your order has arrived!`)
                 orderChan.send(smores[1])
+                //eslint-disable-next-line prefer-reflect
+                delete activeOrders[message.author.id]
               } else if (args.toOrder.toLowerCase().includes('smore 3') || args.toOrder.toLowerCase().includes('s\'more 3') || args.toOrder.toLowerCase().includes('smores 3') || args.toOrder.toLowerCase().includes('s\'mores 3')) {
                 orderChan.send(`${orderAuth} Your order has arrived!`)
                 orderChan.send(smores[2])
+                //eslint-disable-next-line prefer-reflect
+                delete activeOrders[message.author.id]
               } else if (args.toOrder.toLowerCase().includes('smore 4') || args.toOrder.toLowerCase().includes('s\'more 4') || args.toOrder.toLowerCase().includes('smores 4') || args.toOrder.toLowerCase().includes('s\'mores 4')) {
                 orderChan.send(`${orderAuth} Your order has arrived!`)
                 orderChan.send(smores[3])
+                //eslint-disable-next-line prefer-reflect
+                delete activeOrders[message.author.id]
               } else if (args.toOrder.toLowerCase().includes('smore 5') || args.toOrder.toLowerCase().includes('s\'more 5') || args.toOrder.toLowerCase().includes('smores 5') || args.toOrder.toLowerCase().includes('s\'mores 5')) {
                 orderChan.send(`${orderAuth} Your order has arrived!`)
                 orderChan.send(smores[4])
+                //eslint-disable-next-line prefer-reflect
+                delete activeOrders[message.author.id]
               } else if (args.toOrder.toLowerCase().includes('smore 6') || args.toOrder.toLowerCase().includes('s\'more 6') || args.toOrder.toLowerCase().includes('smores 6') || args.toOrder.toLowerCase().includes('s\'mores 6')) {
                 smores = smores[Math.floor(Math.random() * smores.length)]
                 orderChan.send(`${orderAuth} Your order has arrived!`)
                 orderChan.send(smores)
+                //eslint-disable-next-line prefer-reflect
+                delete activeOrders[message.author.id]
               } else if (args.toOrder.toLowerCase().includes('donut 1') || args.toOrder.toLowerCase().includes('donuts 1')) {
                 orderChan.send(`${orderAuth} Your order has arrived!`)
                 orderChan.send(donuts[0])
+                //eslint-disable-next-line prefer-reflect
+                delete activeOrders[message.author.id]
               } else if (args.toOrder.toLowerCase().includes('donut 2') || args.toOrder.toLowerCase().includes('donuts 2')) {
                 orderChan.send(`${orderAuth} Your order has arrived!`)
                 orderChan.send(donuts[1])
+                //eslint-disable-next-line prefer-reflect
+                delete activeOrders[message.author.id]
               } else if (args.toOrder.toLowerCase().includes('donut 3') || args.toOrder.toLowerCase().includes('donuts 3')) {
                 orderChan.send(`${orderAuth} Your order has arrived!`)
                 orderChan.send(donuts[2])
+                //eslint-disable-next-line prefer-reflect
+                delete activeOrders[message.author.id]
               } else if (args.toOrder.toLowerCase().includes('donut 4') || args.toOrder.toLowerCase().includes('donuts 4')) {
                 orderChan.send(`${orderAuth} Your order has arrived!`)
                 orderChan.send(donuts[3])
+                //eslint-disable-next-line prefer-reflect
+                delete activeOrders[message.author.id]
               } else if (args.toOrder.toLowerCase().includes('donut 5') || args.toOrder.toLowerCase().includes('donuts 5')) {
                 orderChan.send(`${orderAuth} Your order has arrived!`)
                 orderChan.send(donuts[4])
+                //eslint-disable-next-line prefer-reflect
+                delete activeOrders[message.author.id]
               } else if (args.toOrder.toLowerCase().includes('donut 6') || args.toOrder.toLowerCase().includes('donuts 6')) {
                 orderChan.send(`${orderAuth} Your order has arrived!`)
                 orderChan.send(donuts[5])
+                //eslint-disable-next-line prefer-reflect
+                delete activeOrders[message.author.id]
               } else if (args.toOrder.toLowerCase().includes('donut 7') || args.toOrder.toLowerCase().includes('donuts 7')) {
                 donuts = donuts[Math.floor(Math.random() * donuts.length)]
                 orderChan.send(`${orderAuth} Your order has arrived!`)
                 orderChan.send(donuts)
+                //eslint-disable-next-line prefer-reflect
+                delete activeOrders[message.author.id]
               } else if (args.toOrder.toLowerCase().includes('drink 1') || args.toOrder.toLowerCase().includes('drinks 1') || args.toOrder.toLowerCase().includes('beverage 1') || args.toOrder.toLowerCase().includes('beverages 1')) {
                 orderChan.send(`${orderAuth} Your order has arrived!`)
                 orderChan.send(drinks[0])
+                //eslint-disable-next-line prefer-reflect
+                delete activeOrders[message.author.id]
               } else if (args.toOrder.toLowerCase().includes('drink 2') || args.toOrder.toLowerCase().includes('drinks 2') || args.toOrder.toLowerCase().includes('beverage 2') || args.toOrder.toLowerCase().includes('beverages 2')) {
                 orderChan.send(`${orderAuth} Your order has arrived!`)
                 orderChan.send(drinks[1])
+                //eslint-disable-next-line prefer-reflect
+                delete activeOrders[message.author.id]
               } else if (args.toOrder.toLowerCase().includes('drink 3') || args.toOrder.toLowerCase().includes('drinks 3') || args.toOrder.toLowerCase().includes('beverage 3') || args.toOrder.toLowerCase().includes('beverages 3')) {
                 orderChan.send(`${orderAuth} Your order has arrived!`)
                 orderChan.send(drinks[2])
+                //eslint-disable-next-line prefer-reflect
+                delete activeOrders[message.author.id]
               } else if (args.toOrder.toLowerCase().includes('drink 4') || args.toOrder.toLowerCase().includes('drinks 4') || args.toOrder.toLowerCase().includes('beverage 4') || args.toOrder.toLowerCase().includes('beverages 4')) {
                 orderChan.send(`${orderAuth} Your order has arrived!`)
                 orderChan.send(drinks[3])
+                //eslint-disable-next-line prefer-reflect
+                delete activeOrders[message.author.id]
               } else if (args.toOrder.toLowerCase().includes('drink 5') || args.toOrder.toLowerCase().includes('drinks 5') || args.toOrder.toLowerCase().includes('beverage 5') || args.toOrder.toLowerCase().includes('beverages 5')) {
                 orderChan.send(`${orderAuth} Your order has arrived!`)
                 orderChan.send(drinks[4])
+                //eslint-disable-next-line prefer-reflect
+                delete activeOrders[message.author.id]
               } else {
                 orderChan.send(`${orderAuth} Your order had an issue and has not arrived properly.`)
                 orderChan.send(`Do \`${message.guild.commandPrefix}hq\` to get a list of ways to contact the developers.`)
+                //eslint-disable-next-line prefer-reflect
+                delete activeOrders[message.author.id]
               }
             }
           }
