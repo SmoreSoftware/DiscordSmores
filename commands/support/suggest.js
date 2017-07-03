@@ -1,3 +1,4 @@
+//eslint-disable-next-line
 const commando = require('discord.js-commando');
 const oneLine = require('common-tags').oneLine;
 const Discord = require('discord.js');
@@ -40,7 +41,7 @@ module.exports = class SuggestCommand extends commando.Command {
           .setAuthor(`${message.author.tag} (${message.author.id})`, `${message.author.avatarURL}`)
           .setColor(0x0000FF)
           .setDescription(`**Guild:** ${message.guild.name} (${message.guild.id}) \n**Channel:** #${message.channel.name} (${message.channel.id}) \n**User:** ${message.author.tag} (${message.author.id}) \n**Suggestion:** ${args.toSug} \n**Invite:** ${invite}`)
-          .setFooter('SmoreBot-JS Suggestions System')
+          .setFooter('DSmores Suggestions System')
           .setTimestamp()
         this.client.channels.get('304727510619389964').send({
           embed: embed

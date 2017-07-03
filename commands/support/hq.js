@@ -1,3 +1,4 @@
+//eslint-disable-next-line
 const commando = require('discord.js-commando');
 const oneLine = require('common-tags').oneLine;
 
@@ -13,7 +14,7 @@ module.exports = class HQCommand extends commando.Command {
         Do you need help with QuoteBot? Want to suggest a feature? Just want to drop by and meet the developers?
         This command sends an invite to the official SmoreSoftware Discord server.
 			`,
-      examples: ['support'],
+      examples: ['hq'],
       guarded: true
     })
   }

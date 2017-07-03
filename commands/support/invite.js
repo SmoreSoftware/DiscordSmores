@@ -1,3 +1,4 @@
+//eslint-disable-next-line
 const commando = require('discord.js-commando');
 const oneLine = require('common-tags').oneLine;
 
@@ -12,7 +13,7 @@ module.exports = class InviteCommand extends commando.Command {
       details: oneLine `
         sends an invite for the bot
 			`,
-      examples: ['support'],
+      examples: ['invite'],
       guildOnly: true,
       guarded: true
     })

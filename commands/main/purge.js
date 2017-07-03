@@ -1,3 +1,4 @@
+//eslint-disable-next-line
 const commando = require('discord.js-commando');
 const oneLine = require('common-tags').oneLine;
 
@@ -12,7 +13,7 @@ module.exports = class PurgeCommand extends commando.Command {
       details: oneLine `
         DESTROY IT!
 			`,
-      examples: ['purge'],
+      examples: ['purge 25'],
       args: [{
         key: 'toPurge',
         label: 'purge',

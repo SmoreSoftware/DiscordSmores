@@ -1,3 +1,4 @@
+//eslint-disable-next-line
 const commando = require('discord.js-commando');
 const oneLine = require('common-tags').oneLine;
 const Discord = require('discord.js');
@@ -11,7 +12,7 @@ module.exports = class SupportCommand extends commando.Command {
       memberName: 'support',
       description: 'Calls the developer server for support.',
       details: oneLine `
-        Do you need help with QuoteBot?
+        Do you need help with DiscordS'mores?
         Use this command to get in contact with the developers and get the help you need!
 			`,
       examples: ['support'],
@@ -23,7 +24,7 @@ module.exports = class SupportCommand extends commando.Command {
   async run(message) {
     let isEnabled
     const client = this.client
-    message.reply('Thank you for contacting QuoteBot Support! If there are any available support representatives, they will contact you soon.')
+    message.reply('Thank you for contacting DiscordS\'mores Support! If there are any available support representatives, they will contact you soon.')
     let chan = message.channel
     let supportChan = '322450311597916172'
     const embed = new Discord.RichEmbed()
@@ -31,7 +32,7 @@ module.exports = class SupportCommand extends commando.Command {
       .setAuthor(`${message.author.tag} (${message.author.id})`, `${message.author.avatarURL}`)
       .setColor(0xFF0000)
       .setDescription(`**Guild:** ${message.guild.name} (${message.guild.id}) \n**Channel:** #${message.channel.name} (${message.channel.id}) \n**Started by:** ${message.author.tag} (${message.author.id})`)
-      .setFooter('QBot Support System')
+      .setFooter('DSmores Support System')
       .setTimestamp()
     this.client.channels.get(supportChan).send({
       embed: embed

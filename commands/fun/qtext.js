@@ -1,21 +1,24 @@
+//eslint-disable-next-line
 const commando = require('discord.js-commando');
 const oneLine = require('common-tags').oneLine;
 
-module.exports = class SuggestCommand extends commando.Command {
+module.exports = class QTextCommand extends commando.Command {
   constructor(client) {
     super(client, {
       name: 'qtext',
       group: 'fun',
       memberName: 'qtext',
-      description: 'random qbert text!',
+      description: 'Translates text to QBert\'s language',
       details: oneLine `
-        qbert like text!
+        Do you like random text? Can you speak QBert's language?
+        Then this is the command for you!
+        This command translates the text you give it into QBert's language.
 			`,
-      examples: ['qtext'],
+      examples: ['qtext hi there this is being translated'],
       args: [{
         key: 'toQtext',
         label: 'qtext',
-        prompt: 'Random Text',
+        prompt: 'What would you like to translate?',
         type: 'string',
         infinite: false
       }],

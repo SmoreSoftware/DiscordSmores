@@ -1,16 +1,17 @@
+//eslint-disable-next-line
 const commando = require('discord.js-commando');
 const oneLine = require('common-tags').oneLine;
 const Discord = require('discord.js');
 
-module.exports = class SuggestCommand extends commando.Command {
+module.exports = class EchoCommand extends commando.Command {
   constructor(client) {
     super(client, {
       name: 'echo',
       group: 'fun',
       memberName: 'echo',
-      description: 'echos what you say!',
+      description: 'Echos what you say!',
       details: oneLine `
-        Wanna make the bot say something?
+        Want to make the bot say something?
         Use this!
 			`,
       examples: ['echo lol'],
