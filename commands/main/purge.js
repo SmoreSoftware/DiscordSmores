@@ -35,7 +35,7 @@ module.exports = class PurgeCommand extends commando.Command {
     message.channel.send('PURGING')
     message.channel.bulkDelete(args.toPurge)
       .then(() => {
-        message.channel.send('PURGE COMPLETE 🔥')
+        message.channel.send('🔥 PURGE COMPLETE 🔥')
       })
   }
 };
