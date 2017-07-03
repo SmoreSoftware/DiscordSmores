@@ -2,8 +2,6 @@
 *.json
 *.JSON
 
-3.8.1
-
 #Settigs db
 settings.sqlite3
 
