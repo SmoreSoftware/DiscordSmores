@@ -32,10 +32,10 @@ module.exports = class OrderCommand extends commando.Command {
     Also please do stone me to death I would gladly be put out of my misery
     Life is misery, existance is pain*/
 
-    let menu = ['smores 1', 's\'mores 1', 'smore 1', 's\'more 1', 'smores 2', 's\'mores 2', 'smore 2', 's\'more 2', 'smores 3', 's\'mores 3', 'smore 3', 's\'more 3', 'smores 4', 's\'mores 4', 'smore 4', 's\'more 4',
-      'smores 5', 's\'mores 5', 'smore 5', 's\'more 5', 'smores 6', 's\'mores 6', 'smore 6', 's\'more 6', 'donut 1', 'donuts 1', 'donut 2', 'donuts 2', 'donut 3', 'donuts 3', 'donut 4', 'donuts 4', 'donut 5', 'donuts 5',
-      'donut 6', 'donuts 6', 'donut 7', 'donuts 7', 'drink 1', 'drinks 1', 'beverage 1', 'beverages 1', 'drink 2', 'drinks 2', 'beverage 2', 'beverages 2', 'drink 3', 'drinks 3', 'beverage 3', 'beverages 3', 'drink 4',
-      'drinks 4', 'beverage 4', 'beverages 4', 'drink 5', 'drinks 5', 'beverage 5', 'beverages 5'
+    let menu = ['smores 1', 's\'mores 1', 'smore 1', 's\'more 1', 'smores 2', 's\'mores 2', 'smore 2', 's\'more 2', 'smores 3', 's\'mores 3', 'smore 3', 's\'more 3', 'smores 4', 's\'mores 4', 'smore 4',
+      's\'more 4', 'smores 5', 's\'mores 5', 'smore 5', 's\'more 5', 'smores 6', 's\'mores 6', 'smore 6', 's\'more 6', 'donut 1', 'donuts 1', 'donut 2', 'donuts 2', 'donut 3', 'donuts 3', 'donut 4',
+      'donuts 4', 'donut 5', 'donuts 5', 'donut 6', 'donuts 6', 'donut 7', 'donuts 7', 'drink 1', 'drinks 1', 'beverage 1', 'beverages 1', 'drink 2', 'drinks 2', 'beverage 2', 'beverages 2', 'drink 3',
+      'drinks 3', 'beverage 3', 'beverages 3', 'drink 4', 'drinks 4', 'beverage 4', 'beverages 4', 'drink 5', 'drinks 5', 'beverage 5', 'beverages 5'
     ]
     if (!menu.includes(args.toOrder.toLowerCase())) return message.reply(`Please order a menu item! Do \`${message.guild.commandPrefix}menu\` to see the menu.`)
     const collector = message.channel.createCollector(msg => msg.author === message.author, {
