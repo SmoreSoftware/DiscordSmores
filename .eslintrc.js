@@ -117,7 +117,9 @@ module.exports = {
       "error",
       "never"
     ],
-    "new-cap": "warn",
+    "new-cap": ["warn", {
+      "newIsCap": true
+    }],
     "new-parens": "warn",
     "newline-after-var": "off",
     "newline-before-return": "warn",
