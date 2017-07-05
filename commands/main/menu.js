@@ -1,7 +1,9 @@
 //eslint-disable-next-line
 const commando = require('discord.js-commando');
 const oneLine = require('common-tags').oneLine;
-const Discord = require('discord.js');
+const {
+  RichEmbed
+} = require('discord.js');
 
 module.exports = class MenuCommand extends commando.Command {
   constructor(client) {
@@ -20,7 +22,7 @@ module.exports = class MenuCommand extends commando.Command {
   }
 
   async run(message) {
-    const embed = new Discord.RichEmbed()
+    const embed = new RichEmbed()
       .setAuthor('Menu', `${this.client.user.avatarURL}`)
       .setColor(0x0000FF)
       //eslint-disable-next-line no-useless-escape

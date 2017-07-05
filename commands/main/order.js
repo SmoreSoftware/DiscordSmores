@@ -1,7 +1,9 @@
 //eslint-disable-next-line
 const commando = require('discord.js-commando');
 const oneLine = require('common-tags').oneLine;
-const Discord = require('discord.js');
+const {
+  RichEmbed
+} = require('discord.js');
 let cooldown = [];
 
 module.exports = class OrderCommand extends commando.Command {
@@ -54,7 +56,7 @@ module.exports = class OrderCommand extends commando.Command {
       if (reason === 'time') return message.reply('The prompt timed out. Pleace try again.')
       if (reason === 'aborted') {
         message.reply('Set note to blank.')
-        const embed = new Discord.RichEmbed()
+        const embed = new RichEmbed()
           .setAuthor(`${message.author.tag} (${message.author.id})`, `${message.author.avatarURL}`)
           .setTitle('New order:')
           .setColor(0xFF4000)
@@ -93,7 +95,7 @@ module.exports = class OrderCommand extends commando.Command {
           setTimeout(cook, time)
 
           function cook() {
-            const embed = new Discord.RichEmbed()
+            const embed = new RichEmbed()
               .setAuthor(`${orderAuth.tag} (${orderAuth.id})`, `${orderAuth.avatarURL}`)
               .setTitle('New order:')
               .setColor(0xFFCC00)
@@ -126,7 +128,7 @@ module.exports = class OrderCommand extends commando.Command {
           }
 
           function deliver() {
-            const embed = new Discord.RichEmbed()
+            const embed = new RichEmbed()
               .setAuthor(`${orderAuth.tag} (${orderAuth.id})`, `${orderAuth.avatarURL}`)
               .setTitle('New order:')
               .setColor(0x00CC00)
@@ -278,7 +280,7 @@ module.exports = class OrderCommand extends commando.Command {
       if (reason === 'success') {
         let note = collected.first()
         message.reply(`Set note to "${note}"`)
-        const embed = new Discord.RichEmbed()
+        const embed = new RichEmbed()
           .setAuthor(`${message.author.tag} (${message.author.id})`, `${message.author.avatarURL}`)
           .setTitle('New order:')
           .setColor(0xFF4000)
@@ -317,7 +319,7 @@ module.exports = class OrderCommand extends commando.Command {
           setTimeout(cook, time)
 
           function cook() {
-            const embed = new Discord.RichEmbed()
+            const embed = new RichEmbed()
               .setAuthor(`${orderAuth.tag} (${orderAuth.id})`, `${orderAuth.avatarURL}`)
               .setTitle('New order:')
               .setColor(0xFFCC00)
@@ -350,7 +352,7 @@ module.exports = class OrderCommand extends commando.Command {
           }
 
           function deliver() {
-            const embed = new Discord.RichEmbed()
+            const embed = new RichEmbed()
               .setAuthor(`${orderAuth.tag} (${orderAuth.id})`, `${orderAuth.avatarURL}`)
               .setTitle('New order:')
               .setColor(0x00CC00)
