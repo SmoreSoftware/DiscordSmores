@@ -33,7 +33,7 @@ client
   .on('debug', () => console.log)
   .on('ready', () => {
     console.log(`Client ready; logged in as ${client.user.tag} (${client.user.id}) with prefix ${config.prefix}`)
-    client.user.setGame(config.prefix + 'help | v0.3.0')
+    client.user.setGame(config.prefix + 'help | v1.0.0')
   })
   .on('disconnect', () => console.warn('Disconnected!'))
   .on('reconnecting', () => console.warn('Reconnecting...'))
