@@ -12,7 +12,7 @@ module.exports = class SupportCommand extends commando.Command {
       memberName: 'support',
       description: 'Calls the developer server for support.',
       details: oneLine `
-        Do you need help with DiscordS'mores?
+        Do you need help with Discord S'mores?
         Use this command to get in contact with the developers and get the help you need!
 			`,
       examples: ['support'],

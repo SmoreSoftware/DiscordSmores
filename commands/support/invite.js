@@ -11,7 +11,8 @@ module.exports = class InviteCommand extends commando.Command {
       memberName: 'invite',
       description: 'Sends an invite for the bot',
       details: oneLine `
-        sends an invite for the bot
+        Do you like Discord S'mores? Do you want it on your very own server?
+        This command sends an invite to the bot so you can spread the Smore love!
 			`,
       examples: ['invite'],
       guildOnly: true,
