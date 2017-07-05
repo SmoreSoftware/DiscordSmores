@@ -24,7 +24,7 @@ module.exports = class SupportCommand extends commando.Command {
   async run(message) {
     let isEnabled
     const client = this.client
-    message.reply('Thank you for contacting DiscordS\'mores Support! If there are any available support representatives, they will contact you soon.')
+    message.reply('Thank you for contacting Discord S\'mores Support! If there are any available support representatives, they will contact you soon.')
     let chan = message.channel
     let supportChan = '322450311597916172'
     const embed = new RichEmbed()
