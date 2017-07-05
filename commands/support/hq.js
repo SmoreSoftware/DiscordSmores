@@ -27,7 +27,7 @@ https://discord.gg/pz5Pk5e
 Come join the official SmoreSoftware Discord server!
 https://discord.gg/89JttFv
 Need some quick help? Call the developers!
-Do \`${message.guild.commandPrefix} support\`
+Do \`${message.guild.commandPrefix}support\`
 Want to suggest something?
 Do \`${message.guild.commandPrefix}suggest\``)
   }
