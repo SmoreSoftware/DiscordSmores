@@ -32,12 +32,12 @@ module.exports = class GAnnCommand extends commando.Command {
     if (!this.client.isOwner(message.author)) return message.reply('You do not have permission to use this command!')
     if (message.author.id === '197891949913571329') {
       let toSay = `${args.msg}
-~TJ, Assistant Developer`
+~TJ, SmoreSoftware Maintainer`
       this.client.guilds.map((guild) => guild.defaultChannel.send(toSay))
       message.reply(`Execution completed. Shouted "${toSay}"`)
-    } else if (message.author.id === '220568440161697792') {
+    } else if (message.author.id === '251383432331001856') {
       let toSay = `${args.msg}
-~Space, Head Developer`
+~Chrono, Head of SmoreSoftware`
       this.client.guilds.map((guild) => guild.defaultChannel.send(toSay))
       message.reply(`Execution completed. Shouted "${toSay}"`)
     } else {
