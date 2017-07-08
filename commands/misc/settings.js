@@ -7,7 +7,7 @@ module.exports = class SettingsCommand extends commando.Command {
     super(client, {
       name: 'settings',
       aliases: ['set', 'setting'],
-      group: 'moderation',
+      group: 'misc',
       memberName: 'settings',
       description: 'Sets or shows server settings.',
       details: oneLine `
