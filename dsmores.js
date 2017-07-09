@@ -6,7 +6,6 @@ const client = new commando.Client({
   commandPrefix: config.prefix,
   unknownCommandResponse: false
 });
-const Discord = require('discord.js');
 //const defclient = new Discord.Client();
 const path = require('path');
 const sqlite = require('sqlite');
@@ -103,32 +102,6 @@ Owner: ${guild.owner.tag} (${guild.owner.id})
 Members: ${guild.members.size}
 Now on: ${client.guilds.size} servers`)
     client.user.setGame(`s.help | ${client.guilds.size} servers`)
-  })
-  .on('messageReactionAdd', (reaction, user) => {
-    //console.log('new reaction')
-    if (reaction.emoji.name === '⭐') {
-      let msg = reaction.message
-      const embed = new Discord.RichEmbed()
-        .setAuthor(msg.author.username, msg.author.avatarURL)
-        .setColor(0xCCA300)
-        .addField('Starred By', `${user.username}`, true)
-        .addField('Channel', `${msg.channel}`, true)
-        .addField('Message', `${msg.content}`, false)
-        .setFooter(`⭐ ${client.user.username} Starboard ⭐`)
-        .setTimestamp()
-      let starboard = client.channels.get(msg.guild.settings.get('starboard'))
-      if (!starboard) return
-      if (user.id === msg.author.id) return msg.channel.send(`${msg.author}, You can't star your own messages!`)
-      //eslint-disable-next-line no-undef
-      reacts = msg.reactions.filter(function(reacts) {
-        return reacts.emoji.name === '⭐'
-      })
-      //eslint-disable-next-line no-undef
-      if (reacts.length > 1) return
-      starboard.send({
-        embed: embed
-      })
-    }
   })
 
 client.login(config.token).catch(console.error);
