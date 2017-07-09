@@ -6,7 +6,7 @@ module.exports = class InviteCommand extends commando.Command {
   constructor(client) {
     super(client, {
       name: 'invite',
-      aliases: ['invite', 'join'],
+      aliases: ['addbot'],
       group: 'support',
       memberName: 'invite',
       description: 'Sends an invite for the bot',
