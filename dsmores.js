@@ -86,7 +86,23 @@ client
     }
   })
   .on('guildCreate', (guild) => {
-    console.log(`New guild added: ${guild.name} (${guild.id}), owned by ${guild.owner.user.tag} (${guild.owner.id}).`)
+    console.log(`New guild added:
+Guild: ${guild.id}
+Name: ${guild.name}
+Owner: ${guild.owner.tag} (${guild.owner.id})
+Members: ${guild.members.size}
+Now on: ${client.guilds.size} servers`)
+    client.user.setGame(`s.help | ${client.guilds.size} servers`)
+    guild.settings.set('announcements', 'on')
+  })
+  .on('guildDelete', (guild) => {
+    console.log(`Exsisting guild left:
+Guild: ${guild.id}
+Name: ${guild.name}
+Owner: ${guild.owner.tag} (${guild.owner.id})
+Members: ${guild.members.size}
+Now on: ${client.guilds.size} servers`)
+    client.user.setGame(`s.help | ${client.guilds.size} servers`)
   })
   .on('messageReactionAdd', (reaction, user) => {
     //console.log('new reaction')
