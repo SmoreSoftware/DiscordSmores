@@ -21,7 +21,7 @@ module.exports = class HQCommand extends commando.Command {
 
   //eslint-disable-next-line class-methods-use-this
   async run(message) {
-    message.channel.send(`**Need help?**
+    message.author.send(`**Need help?**
 Come join the official Discord S'mores server!
 https://discord.gg/pz5Pk5e
 Come join the official SmoreSoftware Discord server!
@@ -30,5 +30,6 @@ Need some quick help? Call the developers!
 Do \`${message.guild ? message.guild.commandPrefix : 'ds.'}support\`
 Want to suggest something?
 Do \`${message.guild ? message.guild.commandPrefix : 'ds.'}suggest\``)
+    await message.reply('Check your DMs!')
   }
 };
