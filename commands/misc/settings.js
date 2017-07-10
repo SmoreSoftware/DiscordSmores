@@ -21,7 +21,7 @@ module.exports = class SettingsCommand extends commando.Command {
           key: 'action',
           label: 'action',
           type: 'string',
-          prompt: 'What would you like to do? (View/ Add)',
+          prompt: 'What would you like to do? (View / Add / List)',
           infinite: false
         },
         {
@@ -71,6 +71,14 @@ module.exports = class SettingsCommand extends commando.Command {
         message.reply(`The announcements state is "${message.guild.settings.get('announcements')}"`)
       } else {
         message.reply('That\'s not a setting. Please try again.');
+      }
+    } else if (args.action.toLowerCase() === 'list') {
+      if (args.setting.toLowerCase() === 'all') {
+        let announcements = message.guild.settings.get('announcements')
+        message.reply(`The settings for this server are:
+**Global announcements**: "${announcements}"`)
+      } else {
+        return message.reply(`Invalid command usage! Please do \`${message.guild.commandPrefix}settings list all\` to see all settings.`)
       }
     } else {
       message.reply('Invalid command usage. Please try again.');
