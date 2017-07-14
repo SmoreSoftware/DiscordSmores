@@ -31,7 +31,7 @@ module.exports = class FLeaveCommand extends commando.Command {
   async run(message, args) {
     if (!this.client.isOwner(message.author)) return message.reply('You do not have permission to use this command!')
     let guild = this.client.guilds.get(args.toLeave)
-    guild.defaultChannel.send('**ALERT:** Your guild has been marked as an illegal guild. \nThis may be due to it being marked as a bot guild or marked as a spam guild. \nThe bot will now leave this server. \nIf you wish to speak to my developer, you may join here: https://discord.gg/t8xHbHY')
+    guild.defaultChannel.send('**ALERT:** Your guild has been marked as an illegal guild. \nThis may be due to it being marked as a bot guild or marked as a spam guild. \nThe bot will now leave this server. \nIf you wish to speak to my developer, you may join here: https://discord.gg/6P6MNAU')
     guild.leave()
     message.reply('Left guild.')
   }
