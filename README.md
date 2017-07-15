@@ -7,6 +7,11 @@ Discord S'mores is a Discord food bot to deliver you virtual s'mores! What sets 
 <b>The Team</b>
 -----------------------
  <table style="width:100%">
+ <tr>
+    <th>Name</th>
+    <th>Discord Tag</th>
+    <th>Job</th>
+  </tr>
 <tr>
     <td>TJ</td>
     <td>TJDoesCode#6088</td>
