@@ -2,7 +2,7 @@
 const commando = require('discord.js-commando');
 const oneLine = require('common-tags').oneLine;
 const request = require('superagent');
-const config = require('../../stuff.json');
+const config = require('../../config.json');
 
 module.exports = class ManpostCommand extends commando.Command {
   constructor(bot) {
