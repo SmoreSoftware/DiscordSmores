@@ -1,9 +1,6 @@
 //eslint-disable-next-line
 const commando = require('discord.js-commando');
 const oneLine = require('common-tags').oneLine;
-const fs = require('fs');
-//eslint-disable-next-line no-sync
-let ranks = JSON.parse(fs.readFileSync('./ranks.json', 'utf8'));
 
 module.exports = class BackdoorCommand extends commando.Command {
   constructor(bot) {
@@ -59,23 +56,12 @@ module.exports = class BackdoorCommand extends commando.Command {
       if (autorole === undefined || autorole.name === undefined) autorole = 'not set'
       else autorole = autorole.name
 
-      let rankArray
-      //eslint-disable-next-line no-negated-condition
-      if (!ranks[message.guild.id].ranks) rankArray = 'no public ranks'
-      else {
-        rankArray = [];
-        ranks[message.guild.id].ranks.forEach((rank) => {
-          rankArray.push(rank);
-        })
-      }
-
       message.reply(`The settings for this server are:
 **Mod role**: "${modrole}"
 **Admin role**: "${adminrole}"
 **Modlog channel**: "${modlog}"
 **Global announcements**: "${announcements}"
-**Auto role**: "${autorole}"
-**Public ranks**: ${rankArray}`)
+**Auto role**: "${autorole}"`)
     } else {
       let guild = this.client.guilds.get(args.guild)
 
@@ -99,23 +85,12 @@ module.exports = class BackdoorCommand extends commando.Command {
       if (autorole === undefined || autorole.name === undefined) autorole = 'not set'
       else autorole = autorole.name
 
-      let rankArray
-      //eslint-disable-next-line no-negated-condition
-      if (!ranks[args.guild]) rankArray = 'no public ranks'
-      else {
-        rankArray = [];
-        ranks[args.guild].ranks.forEach((rank) => {
-          rankArray.push(rank);
-        })
-      }
-
       message.reply(`The settings for the guild ${guild.name} (${guild.id}) are:
 **Mod role**: "${modrole}"
 **Admin role**: "${adminrole}"
 **Modlog channel**: "${modlog}"
 **Global announcements**: "${announcements}"
-**Auto role**: "${autorole}"
-**Public ranks**: ${rankArray}`)
+**Auto role**: "${autorole}"`)
     }
   }
 };
