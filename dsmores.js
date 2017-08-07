@@ -28,9 +28,9 @@ client.registry
 client.setProvider(sqlite.open(path.join(__dirname, 'settings.sqlite3')).then(db => new commando.SQLiteProvider(db))).catch(console.error);
 
 client
-  .on('error', () => console.error)
-  .on('warn', () => console.warn)
-  .on('debug', () => console.log)
+  .on('error', console.error)
+  .on('warn', console.warn)
+  .on('debug', console.log)
   .on('ready', () => {
     console.log(`Client ready; logged in as ${client.user.tag} (${client.user.id}) with prefix ${config.prefix}`)
     const dbotsToken1 = config.dbotstoken1
