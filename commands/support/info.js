@@ -29,7 +29,7 @@ module.exports = class InfoCommand extends commando.Command {
       .addField('Main information:', 'I am a Discord Bot made in **JavaScript** using the Discord API Wrapper **Discord.js** on the framework **Discord.js-Commando**', false)
       .addField('Developers:', '• Chronomly • TJDoesCode •', false)
       .addField('Server Count:', `${this.client.guilds.size}`, true)
-      .addField('Host', 'SpaceX', true)
+      .addField('Host', '空 Sai Sky Sables 空', true)
       .setTimestamp()
     message.channel.send({ embed })
   }
