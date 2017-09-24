@@ -22,6 +22,11 @@ Discord S'mores is a Discord food bot to deliver you virtual s'mores! What sets 
     <td>Chronomly6#8108</td>
     <td>Discord S'mores Dev</td>
     </tr>
+    <tr>
+    <td>Sky</td>
+    <td>空 Sai Sky Sables 空#0228</td>
+    <td>Discord S'mores Host</td>
+  </tr>
     </table> 
 </div>
 </html>
