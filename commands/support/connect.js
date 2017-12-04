@@ -31,7 +31,7 @@ module.exports = class SupportCommand extends commando.Command {
 	}
 
 	hasPermission(msg) {
-		return this.client.isOwner(msg.author) || allowed.general.includes(msg.author.id);
+		return this.client.isOwner(msg.author) || allowed.dsmores.includes(msg.author.id);
 	}
 
 	async run(message, args) {
