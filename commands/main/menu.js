@@ -26,8 +26,8 @@ module.exports = class MenuCommand extends commando.Command {
       //eslint-disable-next-line no-useless-escape
       .setDescription(`Order by doing \`${message.guild.commandPrefix}order <group> <item number>\`. For example: \`${message.guild.commandPrefix}order smore 2\` to order slightly gooey s\'mores.`)
       .addField('**S\'mores**', '\n**1)** Golden brown s\'mores \n**2)** Slightly gooey s\'mores \n**3)** Very gooey s\'mores \n**4)** Charred s\'mores \n**5)** Radioactive s\'mores \n**6)** Chef\'s choice', true)
-      .addField('**Donuts**', '\n**1)** Glazed donut \n**2)** Chocolate donut \n**3)** Strawberry donut \n**4)** Lemon filled eclair \n**5)** Maple bacon donut \n**6)** Meme donut \n**7)** Chef\'s choice', true)
-      .addField('**Drinks**', '\n**1)** Coffee \n**2)** Milk \n**3)** Soy milk \n**4)** Almond milk \n**5)** Water', false)
+			.addField('**Drinks**', '\n**1)** Coffee \n**2)** Milk \n**3)** Soy milk \n**4)** Almond milk \n**5)** Water', true)
+			.addField('**Pop-Tarts**', '\n**1)** *S\'mores \n**2)** Frosted Cherry \n**3)** Frosted Strawberry \n**4)** Hot Fudge Sundae \n**5)** Chocolate Chip Cookie Dough \n**6)** Brown Sugar Cinnamon \n**7)** Chocolate Fudge \n**8)** Cookies & Creme \n**9)** Chocolate Chip \n**10)** Chef\'s choice', false)
       .setFooter(`Requested by: ${message.author.username}`)
       .setTimestamp()
     await message.channel.send({

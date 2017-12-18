@@ -1,0 +1,33 @@
+{
+  "name": "discordsmores",
+  "version": "2.0.0",
+  "description": "A Discord bot to deliver you virtual smores!",
+  "main": "dsmores.js",
+  "scripts": {
+    "start": "node dsmors.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SmoreSoftware/DiscordSmores.git"
+  },
+  "author": "TJDoesCode#6088",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SmoreSoftware/DiscordSmores/issues"
+  },
+  "homepage": "https://github.com/SmoreSoftware/DiscordSmores#readme",
+  "dependencies": {
+    "bufferutil": "^3.0.2",
+    "common-tags": "^1.5.1",
+    "discord.js": "^11.2.1",
+    "discord.js-commando": "^0.9.0",
+    "erlpack": "github:hammerandchisel/erlpack",
+    "ms": "^2.1.1",
+    "oneline": "0.0.0",
+    "request": "^2.81.0",
+    "sqlite": "^2.9.0",
+    "superagent": "^3.5.2",
+    "twit": "^2.2.9",
+    "uws": "^0.14.5"
+  }
+}
