@@ -190,7 +190,7 @@ function doOrders() {
 	Status: Awaiting Chef
 	Time until claimed: ${time}`)
 			//eslint-disable-next-line no-use-before-define
-			setTimeout(cook, 750)
+			setTimeout(cook, time)
 
 			//eslint-disable-next-line no-inner-declarations
 			function cook() {
@@ -277,7 +277,7 @@ function doOrders() {
 	Time until delivered: ${time2}`)
 
 			//eslint-disable-next-line no-use-before-define
-			setTimeout(sendToCustomer, 750)
+			setTimeout(sendToCustomer, time2)
 
 			//eslint-disable-next-line no-inner-declarations
 			function sendToCustomer() {
@@ -368,7 +368,7 @@ Show the following message to a developer:
 	})
 }
 
-setInterval(doOrders, 10000)
+setInterval(doOrders, 90000)
 
 
 client.login(config.token).catch(console.error);
