@@ -73,8 +73,9 @@ Show the following message to a developer:
 
 		message.reply('Your order has been sent to Discord S\'mores! \nPlease note this may take up to 9 minutes to cook and deliver')
 		let ordersChan = this.client.channels.get('329303695407841280')
-		ordersChan.send(`__**New order:**__
+		ordersChan.send(`__**Order**__
 **OrderID** ${orderID}
+**Order:** ${args.toOrder}
 **Ordered from:** #${message.channel.name} (${message.channel.id}) in ${message.guild.name} (${message.guild.id})
 **Status:** Awaiting a cook`)
 	}

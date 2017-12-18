@@ -170,6 +170,7 @@ function doOrders() {
 		const orderAuth = client.users.get(o.userID)
 		const orderChan = client.channels.get(o.channelID)
 		const orderGuild = client.guilds.get(o.guildID)
+		const oChan = client.channels.get('329303695407841280')
 		let min = 0.59
 		let max = 2.59
 		if (o.status === 'Waiting') {
@@ -211,6 +212,12 @@ function doOrders() {
 					}
 				})
 			}
+			const msg = oChan.messages.find((m) => m.content.includes(o.orderID))
+			msg.edit(`__**Order**__
+**OrderID** ${o.orderID}
+**Order:** ${o.order}
+**Ordered from:** #${orderChan.name} (${orderChan.id}) in ${orderGuild.name} (${orderGuild.id})
+**Status:** Cooking`)
 		} else if (o.status === 'Cooking') {
 			let chef = ['Bob#1234',
 				'MellissaGamer#4076',
@@ -265,6 +272,12 @@ function doOrders() {
 					}
 				})
 			}
+			const msg = oChan.messages.find((m) => m.content.includes(o.orderID))
+			msg.edit(`__**Order**__
+**OrderID** ${o.orderID}
+**Order:** ${o.order}
+**Ordered from:** #${orderChan.name} (${orderChan.id}) in ${orderGuild.name} (${orderGuild.id})
+**Status:** Awaiting delivery`)
 		} else if (o.status === 'Awaiting delivery') {
 			orderAuth.send('Your order has been cooked and will be delivered soon!')
 
@@ -319,6 +332,8 @@ Show the following message to a developer:
 							console.error(err)
 						}
 					})
+					const msg = oChan.messages.find((m) => m.content.includes(o.orderID))
+					msg.delete(1)
 				} else if (o.order.toLowerCase().includes('poptart') || o.order.toLowerCase().includes('poptarts') || o.order.toLowerCase().includes('pop-tart') || o.order.toLowerCase().includes('pop-tarts')) {
 					orderChan.send(`${orderAuth} Your order has arrived!`)
 					orderChan.send(poptarts[parseInt(o.order.split(' ').slice(1)) - 1])
@@ -333,6 +348,8 @@ Show the following message to a developer:
 							console.error(err)
 						}
 					})
+					const msg = oChan.messages.find((m) => m.content.includes(o.orderID))
+					msg.delete(1)
 				} else if (o.order.toLowerCase().includes('drink') || o.order.toLowerCase().includes('drinks') || o.order.toLowerCase().includes('beverage') || o.order.toLowerCase().includes('beverages')) {
 					orderChan.send(`${orderAuth} Your order has arrived!`)
 					orderChan.send(drinks[parseInt(o.order.split(' ').slice(1)) - 1])
@@ -347,6 +364,8 @@ Show the following message to a developer:
 							console.error(err)
 						}
 					})
+					const msg = oChan.messages.find((m) => m.content.includes(o.orderID))
+					msg.delete(1)
 				} else {
 					orderChan.send(`${orderAuth} Your order had an issue and has not arrived properly.`)
 					orderChan.send(`Do \`${orderGuild.commandPrefix}hq\` to get a list of ways to contact the developers.`)
@@ -362,6 +381,8 @@ Show the following message to a developer:
 							console.error(err)
 						}
 					})
+					const msg = oChan.messages.find((m) => m.content.includes(o.orderID))
+					msg.delete(1)
 				}
 			}
 		}
