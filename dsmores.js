@@ -191,7 +191,7 @@ function doOrders() {
 	Status: Awaiting Chef
 	Time until claimed: ${time}`)
 			//eslint-disable-next-line no-use-before-define
-			setTimeout(cook, time)
+			setTimeout(cook, 750)
 
 			//eslint-disable-next-line no-inner-declarations
 			function cook() {
@@ -212,12 +212,16 @@ function doOrders() {
 					}
 				})
 			}
-			const msg = oChan.messages.find((m) => m.content.includes(o.orderID))
-			msg.edit(`__**Order**__
+			oChan.fetchMessages({ limit: 100 })
+					.then(msgs => {
+						let msg = msgs.filter(m => m.content.includes(o.orderID))
+						msg.first().edit(`__**Order**__
 **OrderID** ${o.orderID}
 **Order:** ${o.order}
+**Customer:** ${orderAuth.tag} (${orderAuth.id})
 **Ordered from:** #${orderChan.name} (${orderChan.id}) in ${orderGuild.name} (${orderGuild.id})
 **Status:** Cooking`)
+					})
 		} else if (o.status === 'Cooking') {
 			let chef = ['Bob#1234',
 				'MellissaGamer#4076',
@@ -272,12 +276,16 @@ function doOrders() {
 					}
 				})
 			}
-			const msg = oChan.messages.find((m) => m.content.includes(o.orderID))
-			msg.edit(`__**Order**__
+			oChan.fetchMessages({ limit: 100 })
+					.then(msgs => {
+						let msg = msgs.filter(m => m.content.includes(o.orderID))
+						msg.first().edit(`__**Order**__
 **OrderID** ${o.orderID}
 **Order:** ${o.order}
+**Customer:** ${orderAuth.tag} (${orderAuth.id})
 **Ordered from:** #${orderChan.name} (${orderChan.id}) in ${orderGuild.name} (${orderGuild.id})
 **Status:** Awaiting delivery`)
+					})
 		} else if (o.status === 'Awaiting delivery') {
 			orderAuth.send('Your order has been cooked and will be delivered soon!')
 
@@ -290,7 +298,7 @@ function doOrders() {
 	Time until delivered: ${time2}`)
 
 			//eslint-disable-next-line no-use-before-define
-			setTimeout(sendToCustomer, time2)
+			setTimeout(sendToCustomer, 750)
 
 			//eslint-disable-next-line no-inner-declarations
 			function sendToCustomer() {
@@ -320,7 +328,12 @@ function doOrders() {
 				orderAuth.send('Your order should be arriving now!')
 				if (o.order.toLowerCase().includes('smore') || o.order.toLowerCase().includes('s\'more') || o.order.toLowerCase().includes('smores') || o.order.toLowerCase().includes('s\'mores')) {
 					orderChan.send(`${orderAuth} Your order has arrived!`)
-					orderChan.send(smores[parseInt(o.order.split(' ').slice(1)) - 1])
+					//eslint-disable-next-line no-negated-condition
+					if (!o.order.toLowerCase().includes('6')) {
+						orderChan.send(smores[parseInt(o.order.split(' ').slice(1)) - 1])
+					} else {
+						orderChan.send(smores[Math.floor(Math.random() * smores.length)])
+					}
 					let userIndex = client.cooldown.indexOf(orderAuth.id)
 					client.cooldown.splice(userIndex, 1)
 					delete orderDB[o.orderID]
@@ -332,11 +345,19 @@ Show the following message to a developer:
 							console.error(err)
 						}
 					})
-					const msg = oChan.messages.find((m) => m.content.includes(o.orderID))
-					msg.delete(1)
+					oChan.fetchMessages({ limit: 100 })
+					.then(msgs => {
+						let msg = msgs.filter(m => m.content.includes(o.orderID))
+						msg.first().delete(1)
+					})
 				} else if (o.order.toLowerCase().includes('poptart') || o.order.toLowerCase().includes('poptarts') || o.order.toLowerCase().includes('pop-tart') || o.order.toLowerCase().includes('pop-tarts')) {
 					orderChan.send(`${orderAuth} Your order has arrived!`)
-					orderChan.send(poptarts[parseInt(o.order.split(' ').slice(1)) - 1])
+					//eslint-disable-next-line no-negated-condition
+					if (!o.order.toLowerCase().includes('10')) {
+						orderChan.send(poptarts[parseInt(o.order.split(' ').slice(1)) - 1])
+					} else {
+						orderChan.send(poptarts[Math.floor(Math.random() * poptarts.length)])
+					}
 					let userIndex = client.cooldown.indexOf(orderAuth.id)
 					client.cooldown.splice(userIndex, 1)
 					delete orderDB[o.orderID]
@@ -348,8 +369,11 @@ Show the following message to a developer:
 							console.error(err)
 						}
 					})
-					const msg = oChan.messages.find((m) => m.content.includes(o.orderID))
-					msg.delete(1)
+					oChan.fetchMessages({ limit: 100 })
+					.then(msgs => {
+						let msg = msgs.filter(m => m.content.includes(o.orderID))
+						msg.first().delete(1)
+					})
 				} else if (o.order.toLowerCase().includes('drink') || o.order.toLowerCase().includes('drinks') || o.order.toLowerCase().includes('beverage') || o.order.toLowerCase().includes('beverages')) {
 					orderChan.send(`${orderAuth} Your order has arrived!`)
 					orderChan.send(drinks[parseInt(o.order.split(' ').slice(1)) - 1])
@@ -364,8 +388,11 @@ Show the following message to a developer:
 							console.error(err)
 						}
 					})
-					const msg = oChan.messages.find((m) => m.content.includes(o.orderID))
-					msg.delete(1)
+					oChan.fetchMessages({ limit: 100 })
+					.then(msgs => {
+						let msg = msgs.filter(m => m.content.includes(o.orderID))
+						msg.first().delete(1)
+					})
 				} else {
 					orderChan.send(`${orderAuth} Your order had an issue and has not arrived properly.`)
 					orderChan.send(`Do \`${orderGuild.commandPrefix}hq\` to get a list of ways to contact the developers.`)
@@ -381,15 +408,18 @@ Show the following message to a developer:
 							console.error(err)
 						}
 					})
-					const msg = oChan.messages.find((m) => m.content.includes(o.orderID))
-					msg.delete(1)
+					oChan.fetchMessages({ limit: 100 })
+					.then(msgs => {
+						let msg = msgs.filter(m => m.content.includes(o.orderID))
+						msg.first().delete(1)
+					})
 				}
 			}
 		}
 	})
 }
 
-setInterval(doOrders, 90000)
+setInterval(doOrders, 10000)
 
 
 client.login(config.token).catch(console.error);
