@@ -1,8 +1,8 @@
 //eslint-disable-next-line
 const commando = require('discord.js-commando');
 const oneLine = require('common-tags').oneLine;
-const sql = require('sqlite')
-//const fs = require('fs');
+//const sql = require('sqlite')
+const fs = require('fs');
 
 module.exports = class OrderCommand extends commando.Command {
 	constructor(client) {
@@ -27,8 +27,21 @@ module.exports = class OrderCommand extends commando.Command {
 	}
 
 	async run(message, args) {
+		try {
+			//eslint-disable-next-line no-sync
+			JSON.parse(fs.readFileSync('./orders.json', 'utf8'))
+		} catch (err) {
+			if (err) {
+				console.error(err)
+				message.reply(`There was an error when trying to place your order!
+Please contact a developer.
+*Note: This is a known problem. A fix is on the way very soon.*`)
+				return
+			}
+		}
+
 		//eslint-disable-next-line no-sync
-		//const orderDB = JSON.parse(fs.readFileSync('./orders.json', 'utf8'));
+		const orderDB = JSON.parse(fs.readFileSync('./orders.json', 'utf8'))
 
 		/*i know this is terrible coding practice and I should be stoned
 		I'm bad, get over it
@@ -64,6 +77,19 @@ module.exports = class OrderCommand extends commando.Command {
 			'status': 'Waiting'
 		}
 
+		fs.writeFile('./orders.json', JSON.stringify(orderDB, null, 2), (err) => {
+			if (err) {
+				message.reply(`There was a database error!
+Show the following message to a developer:
+\`\`\`${err}\`\`\``)
+				console.error(err)
+			}
+		})
+
+		/*shitty shitty fuck fuck
+		i swear to fucking god
+		jesus christ
+
 		sql.open('./orders.sqlite')
 		sql.get(`SELECT * FROM orders WHERE orderId ="${orderID}"`).then(row => {
 			if (!row) {
@@ -75,7 +101,7 @@ module.exports = class OrderCommand extends commando.Command {
 			sql.run('CREATE TABLE IF NOT EXISTS orders (orderId TEXT, userId TEXT, guildId TEXT, channelId TEXT, order TEXT, status TEXT')
 		})
 
-		/*sql.get(`SELECT * FROM scores WHERE userId ="${message.author.id}"`).then(row => {
+		sql.get(`SELECT * FROM scores WHERE userId ="${message.author.id}"`).then(row => {
 				if (!row) {
 					console.log(`order: ${args.toOrder}`)
 					console.log(typeof args.toOrder)

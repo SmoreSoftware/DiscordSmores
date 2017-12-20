@@ -63,7 +63,12 @@ client
 			})
 			.end();
 		console.log('DBots guild count updated.')
-		client.user.setGame(`${config.prefix}help | ${client.guilds.size} servers`)
+		client.user.setPresence({
+			game: {
+				name: `${config.prefix}help | ${client.guilds.size} servers`,
+				type: 0
+			}
+		})
 		console.log('Awaiting actions.')
 	})
 	.on('commandPrefixChange', (guild, prefix) => {
@@ -164,41 +169,92 @@ let active = []
 
 function doOrders() {
 	//console.log('Handling orders')
-	//eslint-disable-next-line no-sync
-	const orderDB = JSON.parse(fs.readFileSync('./orders.json', 'utf8'))
-	const oArray = Object.values(orderDB)
-	oArray.forEach((o) => {
-		const orderAuth = client.users.get(o.userID)
-		const orderChan = client.channels.get(o.channelID)
-		const orderGuild = client.guilds.get(o.guildID)
-		const oChan = client.channels.get('329303695407841280')
-		let min = 0.59
-		let max = 2.59
-		if (o.status === 'Waiting') {
-			if (active.includes(o.orderID)) return
-			if (!active.includes(o.orderID)) {
-				active.push(o.orderID)
-				//eslint-disable-next-line
-				function getRandomInt(min, max) {
-					//eslint-disable-next-line no-mixed-operators
-					let number = (Math.random() * (max - min) + min).toFixed(4)
-					//eslint-disable-next-line newline-before-return
-					return number
-				}
+	try {
+		//eslint-disable-next-line no-sync
+		const orderDB = JSON.parse(fs.readFileSync('./orders.json', 'utf8'))
+		const oArray = Object.values(orderDB)
+		oArray.forEach((o) => {
+			const orderAuth = client.users.get(o.userID)
+			const orderChan = client.channels.get(o.channelID)
+			const orderGuild = client.guilds.get(o.guildID)
+			const oChan = client.channels.get('329303695407841280')
 
-				//let time = getRandomInt(min, max)
-				//eslint-disable-next-line no-mixed-operators
-				let time = (Math.random() * (max - min) + min).toFixed(1)
-				time = time.replace('.', '')
-				time += '0000'
-				console.log(`Order: ${o.orderID}
+			let min = 0.59
+			let max = 2.59
+			if (o.status === 'Waiting') {
+				if (active.includes(o.orderID)) return
+				if (!active.includes(o.orderID)) {
+					active.push(o.orderID)
+					//eslint-disable-next-line
+					function getRandomInt(min, max) {
+						//eslint-disable-next-line no-mixed-operators
+						let number = (Math.random() * (max - min) + min).toFixed(4)
+						//eslint-disable-next-line newline-before-return
+						return number
+					}
+
+					//let time = getRandomInt(min, max)
+					//eslint-disable-next-line no-mixed-operators
+					let time = (Math.random() * (max - min) + min).toFixed(1)
+					time = time.replace('.', '')
+					time += '0000'
+					console.log(`Order: ${o.orderID}
 	Status: Awaiting Chef
 	Time until claimed: ${time}ms`)
-				//eslint-disable-next-line no-use-before-define
-				setTimeout(cook, time)
+					//eslint-disable-next-line no-use-before-define
+					setTimeout(cook, time)
 
-				//eslint-disable-next-line no-inner-declarations
-				function cook() {
+					//eslint-disable-next-line no-inner-declarations
+					function cook() {
+						orderDB[o.orderID] = {
+							'orderID': o.orderID,
+							'userID': o.userID,
+							'guildID': o.guildID,
+							'channelID': o.channelID,
+							'order': o.order,
+							'status': 'Cooking'
+						}
+						fs.writeFile('./orders.json', JSON.stringify(orderDB, null, 2), (err) => {
+							if (err) {
+								orderAuth.send(`There was a database error!
+	Show the following message to a developer:
+	\`\`\`${err}\`\`\``)
+								console.error(err)
+							}
+						})
+						let oIndex = active.indexOf(o.orderID)
+						active.splice(oIndex, 1)
+					}
+				}
+			} else if (o.status === 'Cooking') {
+				if (active.includes(o.orderID)) return
+				if (!active.includes(o.orderID)) {
+					active.push(o.orderID)
+					oChan.fetchMessages({
+							limit: 100
+						})
+						.then(msgs => {
+							let msg = msgs.filter(m => m.content.includes(o.orderID))
+							msg.first().edit(`__**Order**__
+**OrderID:** ${o.orderID}
+**Order:** ${o.order}
+**Customer:** ${orderAuth.tag} (${orderAuth.id})
+**Ordered from:** #${orderChan.name} (${orderChan.id}) in ${orderGuild.name} (${orderGuild.id})
+**Status:** Cooking`)
+						})
+					let chef = ['Bob#1234',
+						'MellissaGamer#4076',
+						'ILoveSmores#3256',
+						'CoolDeveloper#4035',
+						'YoMomma#9693',
+						'SpaceX#0276',
+						'jdenderplays#2316',
+						'ROM Typo#9462',
+						'TJDoesCode#6088',
+						'Chronomly6#8108',
+						'SmoreBot#0560'
+					]
+					chef = chef[Math.floor(Math.random() * chef.length)]
 					orderDB[o.orderID] = {
 						'orderID': o.orderID,
 						'userID': o.userID,
@@ -215,244 +271,207 @@ function doOrders() {
 							console.error(err)
 						}
 					})
-					let oIndex = active.indexOf(o.orderID)
-					active.splice(oIndex, 1)
-				}
-			}
-		} else if (o.status === 'Cooking') {
-			if (active.includes(o.orderID)) return
-			if (!active.includes(o.orderID)) {
-				active.push(o.orderID)
-				oChan.fetchMessages({
-						limit: 100
-					})
-					.then(msgs => {
-						let msg = msgs.filter(m => m.content.includes(o.orderID))
-						msg.first().edit(`__**Order**__
-**OrderID:** ${o.orderID}
-**Order:** ${o.order}
-**Customer:** ${orderAuth.tag} (${orderAuth.id})
-**Ordered from:** #${orderChan.name} (${orderChan.id}) in ${orderGuild.name} (${orderGuild.id})
-**Status:** Cooking`)
-					})
-				let chef = ['Bob#1234',
-					'MellissaGamer#4076',
-					'ILoveSmores#3256',
-					'CoolDeveloper#4035',
-					'YoMomma#9693',
-					'SpaceX#0276',
-					'jdenderplays#2316',
-					'ROM Typo#9462',
-					'TJDoesCode#6088',
-					'Chronomly6#8108',
-					'SmoreBot#0560'
-				]
-				chef = chef[Math.floor(Math.random() * chef.length)]
-				orderDB[o.orderID] = {
-					'orderID': o.orderID,
-					'userID': o.userID,
-					'guildID': o.guildID,
-					'channelID': o.channelID,
-					'order': o.order,
-					'status': 'Cooking'
-				}
-				fs.writeFile('./orders.json', JSON.stringify(orderDB, null, 2), (err) => {
-					if (err) {
-						orderAuth.send(`There was a database error!
-	Show the following message to a developer:
-	\`\`\`${err}\`\`\``)
-						console.error(err)
-					}
-				})
-				orderAuth.send(`Your order has been put in the oven by chef ${chef}`)
-				orderAuth.send('Cooking will take 3 minutes.')
-				//eslint-disable-next-line no-use-before-define
-				setTimeout(deliver, 180000)
+					orderAuth.send(`Your order has been put in the oven by chef ${chef}`)
+					orderAuth.send('Cooking will take 3 minutes.')
+					//eslint-disable-next-line no-use-before-define
+					setTimeout(deliver, 180000)
 
-				//eslint-disable-next-line no-inner-declarations
-				function deliver() {
-					orderDB[o.orderID] = {
-						'orderID': o.orderID,
-						'userID': o.userID,
-						'guildID': o.guildID,
-						'channelID': o.channelID,
-						'order': o.order,
-						'status': 'Awaiting delivery'
-					}
-					fs.writeFile('./orders.json', JSON.stringify(orderDB, null, 2), (err) => {
-						if (err) {
-							orderAuth.send(`There was a database error!
+					//eslint-disable-next-line no-inner-declarations
+					function deliver() {
+						orderDB[o.orderID] = {
+							'orderID': o.orderID,
+							'userID': o.userID,
+							'guildID': o.guildID,
+							'channelID': o.channelID,
+							'order': o.order,
+							'status': 'Awaiting delivery'
+						}
+						fs.writeFile('./orders.json', JSON.stringify(orderDB, null, 2), (err) => {
+							if (err) {
+								orderAuth.send(`There was a database error!
 		Show the following message to a developer:
 		\`\`\`${err}\`\`\``)
-							console.error(err)
-						}
-					})
-					oChan.fetchMessages({
-							limit: 100
+								console.error(err)
+							}
 						})
-						.then(msgs => {
-							let msg = msgs.filter(m => m.content.includes(o.orderID))
-							msg.first().edit(`__**Order**__
+						oChan.fetchMessages({
+								limit: 100
+							})
+							.then(msgs => {
+								let msg = msgs.filter(m => m.content.includes(o.orderID))
+								msg.first().edit(`__**Order**__
 **OrderID:** ${o.orderID}
 **Order:** ${o.order}
 **Customer:** ${orderAuth.tag} (${orderAuth.id})
 **Ordered from:** #${orderChan.name} (${orderChan.id}) in ${orderGuild.name} (${orderGuild.id})
 **Status:** Awaiting delivery`)
-						})
-					let oIndex = active.indexOf(o.orderID)
-					active.splice(oIndex, 1)
-				}
-			}
-		} else if (o.status === 'Awaiting delivery') {
-			if (active.includes(o.orderID)) return
-			if (!active.includes(o.orderID)) {
-				active.push(o.orderID)
-				orderAuth.send('Your order has been cooked and will be delivered soon!')
-
-				//eslint-disable-next-line no-mixed-operators
-				//let time2 = (Math.random() * (30000 - 59000) + 30000).toFixed(1)
-				let time2 = 45000
-				console.log(`Order: ${o.orderID}
-	Status: Awaiting Delivery
-	Time until delivered: ${time2}ms`)
-
-				//eslint-disable-next-line no-use-before-define
-				setTimeout(sendToCustomer, time2)
-
-				//eslint-disable-next-line no-inner-declarations
-				function sendToCustomer() {
-					let smores = ['https://busyfoodie.files.wordpress.com/2015/02/dsc01984.jpg',
-						'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-n2VlKwdEbHH9xbRh_LZAhjCVa9VFspdIGzHNJyzT6YatArSE2Q',
-						'https://cdn.farmersalmanac.com/wp-content/uploads/2013/08/mmm-smore-420x240.jpg',
-						'http://cookingwithcurls.com/wp-content/uploads/2015/07/Outdoor-Smores-with-Homemade-Peanut-Butter-perfectly-charred-marshmallows-and-Hersheys-chocolate-bars-cookingwithcurls.com-LetsMakeSmores-Ad.jpg',
-						'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUK6T-2tPjXpgs9cITVGxqsQ4nRQ-jSDh-QCgrlPsdclA2W5rg https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9KNWVBLj6Ds0ay0KVqQ-ei6n5o9a-aITuBdGb8QUpI7-MXK9r'
-					]
-					let poptarts = ['https://images-na.ssl-images-amazon.com/images/I/81qfBv6ec6L._SL1500_.jpg',
-						'https://www.dollargeneral.com/media/catalog/product/cache/image/700x700/e9c3970ab036de70892d86c6d221abfe/1/4/14429001_kellog_pop-tarts_frosted_cherry_14.7_right_facing_1.jpg',
-						'https://images-na.ssl-images-amazon.com/images/G/01/aplusautomation/vendorimages/9558c871-1eb4-4645-b7ba-2218082ede06.jpg._CB289937741_.jpg',
-						'https://www.usafoodstore.co.uk/user/products/large/HOT-FUDGE-SUNDAE.JPG',
-						'https://i5.walmartimages.com/asr/fe94dbb8-a1ce-4d3e-815d-d95119fcba28_1.baab75fba6936d81ddca29edfecdbe20.jpeg?odnHeight=450&odnWidth=450&odnBg=FFFFFF',
-						'https://images-na.ssl-images-amazon.com/images/I/51pRL2lUNwL.jpg',
-						'https://www.dollargeneral.com/media/catalog/product/cache/image/700x700/e9c3970ab036de70892d86c6d221abfe/0/0/00834101_kellogg_pop-tarts_chocolate_fudge_right_facing.jpg',
-						'https://www.pacificcandywhsle.com/wp-content/uploads/2017/03/84b005924f9544052e3aa4a74f1a825b.jpg',
-						'https://images-na.ssl-images-amazon.com/images/I/61GkXdZ-GvL._SY300_QL70_.jpg'
-					]
-					let drinks = ['https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRAwI9Db5c-fxdBiWn-ErVO2m3zzp96Cdgtv8f2iznymYhrK8CZcQ',
-						'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOTLkelJm9DpeR-7vXPejvhJCscxoGU6krzow-zHI-ZWcuFF5csQ',
-						'http://www.newhealthadvisor.com/images/1HT19185/soy-milk.gif',
-						'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRx3XE9LKfTGrppEV0oMcAejRwqAwMDAgOqEVDqtrwSVavqM0CDpA',
-						'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQhtwJK3rKLac82kKQJIqsOH9vW43aH4BK6v5tkP90uBUn3UylbevOXDpc'
-					]
-
-					orderAuth.send('Your order should be arriving now!')
-					if (o.order.toLowerCase().includes('smore') || o.order.toLowerCase().includes('s\'more') || o.order.toLowerCase().includes('smores') || o.order.toLowerCase().includes('s\'mores')) {
-						orderChan.send(`${orderAuth} Your order has arrived!`)
-						//eslint-disable-next-line no-negated-condition
-						if (!o.order.toLowerCase().includes('6')) {
-							orderChan.send(smores[parseInt(o.order.split(' ').slice(1)) - 1])
-						} else {
-							orderChan.send(smores[Math.floor(Math.random() * smores.length)])
-						}
-						let userIndex = client.cooldown.indexOf(orderAuth.id)
-						client.cooldown.splice(userIndex, 1)
-						delete orderDB[o.orderID]
-						fs.writeFile('./orders.json', JSON.stringify(orderDB, null, 2), (err) => {
-							if (err) {
-								orderAuth.send(`There was a database error!
-Show the following message to a developer:
-\`\`\`${err}\`\`\``)
-								console.error(err)
-							}
-						})
-						oChan.fetchMessages({
-								limit: 100
-							})
-							.then(msgs => {
-								let msg = msgs.filter(m => m.content.includes(o.orderID))
-								msg.first().delete(1)
-							})
-						let oIndex = active.indexOf(o.orderID)
-						active.splice(oIndex, 1)
-					} else if (o.order.toLowerCase().includes('poptart') || o.order.toLowerCase().includes('poptarts') || o.order.toLowerCase().includes('pop-tart') || o.order.toLowerCase().includes('pop-tarts')) {
-						orderChan.send(`${orderAuth} Your order has arrived!`)
-						//eslint-disable-next-line no-negated-condition
-						if (!o.order.toLowerCase().includes('10')) {
-							orderChan.send(poptarts[parseInt(o.order.split(' ').slice(1)) - 1])
-						} else {
-							orderChan.send(poptarts[Math.floor(Math.random() * poptarts.length)])
-						}
-						let userIndex = client.cooldown.indexOf(orderAuth.id)
-						client.cooldown.splice(userIndex, 1)
-						delete orderDB[o.orderID]
-						fs.writeFile('./orders.json', JSON.stringify(orderDB, null, 2), (err) => {
-							if (err) {
-								orderAuth.send(`There was a database error!
-Show the following message to a developer:
-\`\`\`${err}\`\`\``)
-								console.error(err)
-							}
-						})
-						oChan.fetchMessages({
-								limit: 100
-							})
-							.then(msgs => {
-								let msg = msgs.filter(m => m.content.includes(o.orderID))
-								msg.first().delete(1)
-							})
-						let oIndex = active.indexOf(o.orderID)
-						active.splice(oIndex, 1)
-					} else if (o.order.toLowerCase().includes('drink') || o.order.toLowerCase().includes('drinks') || o.order.toLowerCase().includes('beverage') || o.order.toLowerCase().includes('beverages')) {
-						orderChan.send(`${orderAuth} Your order has arrived!`)
-						orderChan.send(drinks[parseInt(o.order.split(' ').slice(1)) - 1])
-						let userIndex = client.cooldown.indexOf(orderAuth.id)
-						client.cooldown.splice(userIndex, 1)
-						delete orderDB[o.orderID]
-						fs.writeFile('./orders.json', JSON.stringify(orderDB, null, 2), (err) => {
-							if (err) {
-								orderAuth.send(`There was a database error!
-Show the following message to a developer:
-\`\`\`${err}\`\`\``)
-								console.error(err)
-							}
-						})
-						oChan.fetchMessages({
-								limit: 100
-							})
-							.then(msgs => {
-								let msg = msgs.filter(m => m.content.includes(o.orderID))
-								msg.first().delete(1)
-							})
-						let oIndex = active.indexOf(o.orderID)
-						active.splice(oIndex, 1)
-					} else {
-						orderChan.send(`${orderAuth} Your order had an issue and has not arrived properly.`)
-						orderChan.send(`Do \`${orderGuild.commandPrefix}hq\` to get a list of ways to contact the developers.`)
-						orderChan.send('We apoligize for any inconvinience.')
-						let userIndex = client.cooldown.indexOf(orderAuth.id)
-						client.cooldown.splice(userIndex, 1)
-						delete orderDB[o.orderID]
-						fs.writeFile('./orders.json', JSON.stringify(orderDB, null, 2), (err) => {
-							if (err) {
-								orderAuth.send(`There was a database error!
-Show the following message to a developer:
-\`\`\`${err}\`\`\``)
-								console.error(err)
-							}
-						})
-						oChan.fetchMessages({
-								limit: 100
-							})
-							.then(msgs => {
-								let msg = msgs.filter(m => m.content.includes(o.orderID))
-								msg.first().delete(1)
 							})
 						let oIndex = active.indexOf(o.orderID)
 						active.splice(oIndex, 1)
 					}
 				}
+			} else if (o.status === 'Awaiting delivery') {
+				if (active.includes(o.orderID)) return
+				if (!active.includes(o.orderID)) {
+					active.push(o.orderID)
+					orderAuth.send('Your order has been cooked and will be delivered soon!')
+
+					//eslint-disable-next-line no-mixed-operators
+					//let time2 = (Math.random() * (30000 - 59000) + 30000).toFixed(1)
+					let time2 = 45000
+					console.log(`Order: ${o.orderID}
+	Status: Awaiting Delivery
+	Time until delivered: ${time2}ms`)
+
+					//eslint-disable-next-line no-use-before-define
+					setTimeout(sendToCustomer, time2)
+
+					//eslint-disable-next-line no-inner-declarations
+					function sendToCustomer() {
+						let smores = ['https://busyfoodie.files.wordpress.com/2015/02/dsc01984.jpg',
+							'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-n2VlKwdEbHH9xbRh_LZAhjCVa9VFspdIGzHNJyzT6YatArSE2Q',
+							'https://cdn.farmersalmanac.com/wp-content/uploads/2013/08/mmm-smore-420x240.jpg',
+							'http://cookingwithcurls.com/wp-content/uploads/2015/07/Outdoor-Smores-with-Homemade-Peanut-Butter-perfectly-charred-marshmallows-and-Hersheys-chocolate-bars-cookingwithcurls.com-LetsMakeSmores-Ad.jpg',
+							'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUK6T-2tPjXpgs9cITVGxqsQ4nRQ-jSDh-QCgrlPsdclA2W5rg https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9KNWVBLj6Ds0ay0KVqQ-ei6n5o9a-aITuBdGb8QUpI7-MXK9r'
+						]
+						let poptarts = ['https://images-na.ssl-images-amazon.com/images/I/81qfBv6ec6L._SL1500_.jpg',
+							'https://www.dollargeneral.com/media/catalog/product/cache/image/700x700/e9c3970ab036de70892d86c6d221abfe/1/4/14429001_kellog_pop-tarts_frosted_cherry_14.7_right_facing_1.jpg',
+							'https://images-na.ssl-images-amazon.com/images/G/01/aplusautomation/vendorimages/9558c871-1eb4-4645-b7ba-2218082ede06.jpg._CB289937741_.jpg',
+							'https://www.usafoodstore.co.uk/user/products/large/HOT-FUDGE-SUNDAE.JPG',
+							'https://i5.walmartimages.com/asr/fe94dbb8-a1ce-4d3e-815d-d95119fcba28_1.baab75fba6936d81ddca29edfecdbe20.jpeg?odnHeight=450&odnWidth=450&odnBg=FFFFFF',
+							'https://images-na.ssl-images-amazon.com/images/I/51pRL2lUNwL.jpg',
+							'https://www.dollargeneral.com/media/catalog/product/cache/image/700x700/e9c3970ab036de70892d86c6d221abfe/0/0/00834101_kellogg_pop-tarts_chocolate_fudge_right_facing.jpg',
+							'https://www.pacificcandywhsle.com/wp-content/uploads/2017/03/84b005924f9544052e3aa4a74f1a825b.jpg',
+							'https://images-na.ssl-images-amazon.com/images/I/61GkXdZ-GvL._SY300_QL70_.jpg'
+						]
+						let drinks = ['https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRAwI9Db5c-fxdBiWn-ErVO2m3zzp96Cdgtv8f2iznymYhrK8CZcQ',
+							'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOTLkelJm9DpeR-7vXPejvhJCscxoGU6krzow-zHI-ZWcuFF5csQ',
+							'http://www.newhealthadvisor.com/images/1HT19185/soy-milk.gif',
+							'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRx3XE9LKfTGrppEV0oMcAejRwqAwMDAgOqEVDqtrwSVavqM0CDpA',
+							'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQhtwJK3rKLac82kKQJIqsOH9vW43aH4BK6v5tkP90uBUn3UylbevOXDpc'
+						]
+
+						orderAuth.send('Your order should be arriving now!')
+						if (o.order.toLowerCase().includes('smore') || o.order.toLowerCase().includes('s\'more') || o.order.toLowerCase().includes('smores') || o.order.toLowerCase().includes('s\'mores')) {
+							orderChan.send(`${orderAuth} Your order has arrived!`)
+							//eslint-disable-next-line no-negated-condition
+							if (!o.order.toLowerCase().includes('6')) {
+								orderChan.send(smores[parseInt(o.order.split(' ').slice(1)) - 1])
+							} else {
+								orderChan.send(smores[Math.floor(Math.random() * smores.length)])
+							}
+							let userIndex = client.cooldown.indexOf(orderAuth.id)
+							client.cooldown.splice(userIndex, 1)
+							delete orderDB[o.orderID]
+							fs.writeFile('./orders.json', JSON.stringify(orderDB, null, 2), (err) => {
+								if (err) {
+									orderAuth.send(`There was a database error!
+Show the following message to a developer:
+\`\`\`${err}\`\`\``)
+									console.error(err)
+								}
+							})
+							oChan.fetchMessages({
+									limit: 100
+								})
+								.then(msgs => {
+									let msg = msgs.filter(m => m.content.includes(o.orderID))
+									msg.first().delete(1)
+								})
+							let oIndex = active.indexOf(o.orderID)
+							active.splice(oIndex, 1)
+						} else if (o.order.toLowerCase().includes('poptart') || o.order.toLowerCase().includes('poptarts') || o.order.toLowerCase().includes('pop-tart') || o.order.toLowerCase().includes('pop-tarts')) {
+							orderChan.send(`${orderAuth} Your order has arrived!`)
+							//eslint-disable-next-line no-negated-condition
+							if (!o.order.toLowerCase().includes('10')) {
+								orderChan.send(poptarts[parseInt(o.order.split(' ').slice(1)) - 1])
+							} else {
+								orderChan.send(poptarts[Math.floor(Math.random() * poptarts.length)])
+							}
+							let userIndex = client.cooldown.indexOf(orderAuth.id)
+							client.cooldown.splice(userIndex, 1)
+							delete orderDB[o.orderID]
+							fs.writeFile('./orders.json', JSON.stringify(orderDB, null, 2), (err) => {
+								if (err) {
+									orderAuth.send(`There was a database error!
+Show the following message to a developer:
+\`\`\`${err}\`\`\``)
+									console.error(err)
+								}
+							})
+							oChan.fetchMessages({
+									limit: 100
+								})
+								.then(msgs => {
+									let msg = msgs.filter(m => m.content.includes(o.orderID))
+									msg.first().delete(1)
+								})
+							let oIndex = active.indexOf(o.orderID)
+							active.splice(oIndex, 1)
+						} else if (o.order.toLowerCase().includes('drink') || o.order.toLowerCase().includes('drinks') || o.order.toLowerCase().includes('beverage') || o.order.toLowerCase().includes('beverages')) {
+							orderChan.send(`${orderAuth} Your order has arrived!`)
+							orderChan.send(drinks[parseInt(o.order.split(' ').slice(1)) - 1])
+							let userIndex = client.cooldown.indexOf(orderAuth.id)
+							client.cooldown.splice(userIndex, 1)
+							delete orderDB[o.orderID]
+							fs.writeFile('./orders.json', JSON.stringify(orderDB, null, 2), (err) => {
+								if (err) {
+									orderAuth.send(`There was a database error!
+Show the following message to a developer:
+\`\`\`${err}\`\`\``)
+									console.error(err)
+								}
+							})
+							oChan.fetchMessages({
+									limit: 100
+								})
+								.then(msgs => {
+									let msg = msgs.filter(m => m.content.includes(o.orderID))
+									msg.first().delete(1)
+								})
+							let oIndex = active.indexOf(o.orderID)
+							active.splice(oIndex, 1)
+						} else {
+							orderChan.send(`${orderAuth} Your order had an issue and has not arrived properly.`)
+							orderChan.send(`Do \`${orderGuild.commandPrefix}hq\` to get a list of ways to contact the developers.`)
+							orderChan.send('We apoligize for any inconvinience.')
+							let userIndex = client.cooldown.indexOf(orderAuth.id)
+							client.cooldown.splice(userIndex, 1)
+							delete orderDB[o.orderID]
+							fs.writeFile('./orders.json', JSON.stringify(orderDB, null, 2), (err) => {
+								if (err) {
+									orderAuth.send(`There was a database error!
+Show the following message to a developer:
+\`\`\`${err}\`\`\``)
+									console.error(err)
+								}
+							})
+							oChan.fetchMessages({
+									limit: 100
+								})
+								.then(msgs => {
+									let msg = msgs.filter(m => m.content.includes(o.orderID))
+									msg.first().delete(1)
+								})
+							let oIndex = active.indexOf(o.orderID)
+							active.splice(oIndex, 1)
+						}
+					}
+				}
 			}
-		}
-	})
+		})
+	} catch (err) {
+		console.error(err)
+		client.user.setPresence({
+			status: 'dnd',
+			game: {
+				name: 'Orders temporarily broken',
+				type: 0
+			}
+		})
+		//eslint-disable-next-line no-useless-return
+		return
+	}
 }
 
 setInterval(doOrders, 10000)
