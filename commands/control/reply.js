@@ -39,6 +39,6 @@ module.exports = class ABLCommand extends commando.Command {
 My developers have patched an issue that was causing orders to break.
 You should now be able to order something and have it delivered.
 Thank you for using Discord S'mores.`)
-		message.reply(`Reply sent to "${this.client.users.get(args.id}.tag}".`)
+		message.reply(`Reply sent to "${this.client.users.get(args.id).tag}".`)
 	}
 };
