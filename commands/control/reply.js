@@ -57,7 +57,7 @@ There was an interruption that caused your order to stop being handled.
 Please reorder.
 Thank you for using Discord S'mores.`
     }
-    
+
 		this.client.users.get(args.id).send(responses[args.response])
     .then(() => message.reply(`Reply sent to "${this.client.users.get(args.id).tag}".`))
     .catch((err) => message.reply(`Could not send reply! \n\`\`\`${err}\`\`\``))
