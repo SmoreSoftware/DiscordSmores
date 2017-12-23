@@ -1,8 +1,11 @@
 //eslint-disable-next-line
 const commando = require('discord.js-commando');
 const oneLine = require('common-tags').oneLine;
-//const sql = require('sqlite')
-const fs = require('fs');
+const fsn = require('fs-nextra');
+
+/*deprecated by fs-nextra
+const sql = require('sqlite');
+const fs = require('fs');*/
 
 module.exports = class OrderCommand extends commando.Command {
 	constructor(client) {
@@ -29,19 +32,18 @@ module.exports = class OrderCommand extends commando.Command {
 	async run(message, args) {
 		try {
 			//eslint-disable-next-line no-sync
-			JSON.parse(fs.readFileSync('./orders.json', 'utf8'))
+			fsn.readJSON('./orders.json')
 		} catch (err) {
 			if (err) {
 				console.error(err)
 				message.reply(`There was an error when trying to place your order!
-Please contact a developer.
-*Note: This is a known problem. A fix is on the way very soon.*`)
+Please contact a developer.`)
 				return
 			}
 		}
 
 		//eslint-disable-next-line no-sync
-		const orderDB = JSON.parse(fs.readFileSync('./orders.json', 'utf8'))
+		const orderDB = fsn.readJSON('./orders.json')
 
 		/*i know this is terrible coding practice and I should be stoned
 		I'm bad, get over it
@@ -62,13 +64,13 @@ Please contact a developer.
 		function makeID() {
 			let id = '';
 			let possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-			for (let i = 0; i < 5; i++) id += possible.charAt(Math.floor(Math.random() * possible.length));
+			for (let i = 0;i < 5;i++) id += possible.charAt(Math.floor(Math.random() * possible.length));
 			//eslint-disable-next-line newline-before-return
 			return id;
 		}
 		const orderID = makeID()
 
-		let orderObj = {
+		if (!orderDB[orderID]) orderDB[orderID] = {
 			'orderID': orderID,
 			'userID': message.author.id,
 			'guildID': message.guild.id,
@@ -77,6 +79,31 @@ Please contact a developer.
 			'status': 'Waiting'
 		}
 
+		fsn.writeJSON('./orders.json', orderDB, {
+				replacer: null,
+				spaces: 2
+			})
+			.then(() => {
+				message.reply(`Your order has been sent to Discord S'mores! Your order ID is \`${orderID}\` \nPlease note this may take up to 9 minutes to cook and deliver.`)
+				let ordersChan = this.client.channels.get('329303695407841280')
+				ordersChan.send(`__**Order**__
+**OrderID:** ${orderID}
+**Order:** ${args.toOrder}
+**Customer:** ${message.author.tag} (${message.author.id})
+**Ordered from:** #${message.channel.name} (${message.channel.id}) in ${message.guild.name} (${message.guild.id})
+**Status:** Awaiting a cook`)
+			})
+			.catch((err) => {
+				if (err) {
+					message.reply(`There was a database error!
+Show the following message to a developer:
+\`\`\`${err}\`\`\``)
+					console.error(`Error in order ${orderID}
+${err}`)
+				}
+			})
+
+		/*deprecated by fs-nextra
 		fs.writeFile('./orders.json', JSON.stringify(orderDB, null, 2), (err) => {
 			if (err) {
 				message.reply(`There was a database error!
@@ -84,7 +111,7 @@ Show the following message to a developer:
 \`\`\`${err}\`\`\``)
 				console.error(err)
 			}
-		})
+		})*/
 
 		/*shitty shitty fuck fuck
 		i swear to fucking god
@@ -114,13 +141,5 @@ Show the following message to a developer:
 				console.error()
 			})*/
 
-		message.reply(`Your order has been sent to Discord S'mores! Your order ID is \`${orderID}\` \nPlease note this may take up to 9 minutes to cook and deliver.`)
-		let ordersChan = this.client.channels.get('329303695407841280')
-		ordersChan.send(`__**Order**__
-**OrderID:** ${orderID}
-**Order:** ${args.toOrder}
-**Customer:** ${message.author.tag} (${message.author.id})
-**Ordered from:** #${message.channel.name} (${message.channel.id}) in ${message.guild.name} (${message.guild.id})
-**Status:** Awaiting a cook`)
 	}
 };
