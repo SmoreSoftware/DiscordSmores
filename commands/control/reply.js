@@ -23,6 +23,13 @@ module.exports = class ABLCommand extends commando.Command {
 					prompt: 'What is the ID you would like to alert?',
 					type: 'string',
 					infinite: false
+        },
+        {
+					key: 'response',
+					label: 'response',
+					prompt: 'What is the response you would like to use? (bug, dberr, interrupt) ',
+					type: 'string',
+					infinite: false
 				}
 			],
 
@@ -35,10 +42,24 @@ module.exports = class ABLCommand extends commando.Command {
 	}
 
 	async run(message, args) {
-		this.client.users.get(args.id).send(`Apoligies about your order not being delivered.
-My developers have patched an issue that was causing orders to break.
-You should now be able to order something and have it delivered.
-Thank you for using Discord S'mores.`)
-		message.reply(`Reply sent to "${this.client.users.get(args.id).tag}".`)
+    const responses = {
+      bug: `I apoligize about your order not being delivered.
+There was an issue that caused your order to break.
+The issue has been fixed by my developers.
+You should now be able to order something and have it delivered properly.
+Thank you for using Discord S'mores.`,
+      dberr: `I apoligize about your order not being delivered.
+The order database dropped your order.
+Please reorder.
+Thank you for using Discord S'mores.`,
+      interrupt: `I apoligize about your order not being delivered.
+There was an interruption that caused your order to stop being handled.
+Please reorder.
+Thank you for using Discord S'mores.`
+    }
+    
+		this.client.users.get(args.id).send(responses[args.response])
+    .then(() => message.reply(`Reply sent to "${this.client.users.get(args.id).tag}".`))
+    .catch((err) => message.reply(`Could not send reply! \n\`\`\`${err}\`\`\``))
 	}
 };
