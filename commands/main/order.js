@@ -85,7 +85,7 @@ Please contact a developer.`)
 			})
 			.then(() => {
 				message.reply(`Your order has been sent to Discord S'mores! Your order ID is \`${orderID}\` \nPlease note this may take up to 9 minutes to cook and deliver.`)
-				let ordersChan = this.client.channels.get('329303695407841280')
+				let ordersChan = this.client.channels.get('394031402758438912')
 				ordersChan.send(`__**Order**__
 **OrderID:** ${orderID}
 **Order:** ${args.toOrder}

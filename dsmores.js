@@ -195,7 +195,7 @@ function doOrders() {
 				const orderAuth = client.users.get(o.userID)
 				const orderChan = client.channels.get(o.channelID)
 				const orderGuild = client.guilds.get(o.guildID)
-				const oChan = client.channels.get('329303695407841280')
+				const oChan = client.channels.get('394031402758438912')
 
 				let min = 0.59
 				let max = 2.59
