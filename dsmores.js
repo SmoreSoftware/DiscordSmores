@@ -366,27 +366,27 @@ Show the following message to a developer:
 
 						//eslint-disable-next-line no-inner-declarations
 						function sendToCustomer() {
-							let smores = ['https://busyfoodie.files.wordpress.com/2015/02/dsc01984.jpg',
-								'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-n2VlKwdEbHH9xbRh_LZAhjCVa9VFspdIGzHNJyzT6YatArSE2Q',
-								'https://cdn.farmersalmanac.com/wp-content/uploads/2013/08/mmm-smore-420x240.jpg',
-								'http://cookingwithcurls.com/wp-content/uploads/2015/07/Outdoor-Smores-with-Homemade-Peanut-Butter-perfectly-charred-marshmallows-and-Hersheys-chocolate-bars-cookingwithcurls.com-LetsMakeSmores-Ad.jpg',
-								'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUK6T-2tPjXpgs9cITVGxqsQ4nRQ-jSDh-QCgrlPsdclA2W5rg https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9KNWVBLj6Ds0ay0KVqQ-ei6n5o9a-aITuBdGb8QUpI7-MXK9r'
+							let smores = ['https://i.imgur.com/eh93oM9.png',
+								'https://i.imgur.com/DvoQEdX.png',
+								'https://i.imgur.com/zdsGDa4.png',
+								'https://i.imgur.com/o3hD2Mv.png',
+								'https://i.imgur.com/LS2b4Mc.png https://i.imgur.com/btwgJnw.png'
 							]
-							let poptarts = ['https://images-na.ssl-images-amazon.com/images/I/81qfBv6ec6L._SL1500_.jpg',
-								'https://www.dollargeneral.com/media/catalog/product/cache/image/700x700/e9c3970ab036de70892d86c6d221abfe/1/4/14429001_kellog_pop-tarts_frosted_cherry_14.7_right_facing_1.jpg',
-								'https://images-na.ssl-images-amazon.com/images/G/01/aplusautomation/vendorimages/9558c871-1eb4-4645-b7ba-2218082ede06.jpg._CB289937741_.jpg',
-								'https://www.usafoodstore.co.uk/user/products/large/HOT-FUDGE-SUNDAE.JPG',
-								'https://i5.walmartimages.com/asr/fe94dbb8-a1ce-4d3e-815d-d95119fcba28_1.baab75fba6936d81ddca29edfecdbe20.jpeg?odnHeight=450&odnWidth=450&odnBg=FFFFFF',
-								'https://images-na.ssl-images-amazon.com/images/I/51pRL2lUNwL.jpg',
-								'https://www.dollargeneral.com/media/catalog/product/cache/image/700x700/e9c3970ab036de70892d86c6d221abfe/0/0/00834101_kellogg_pop-tarts_chocolate_fudge_right_facing.jpg',
-								'https://www.pacificcandywhsle.com/wp-content/uploads/2017/03/84b005924f9544052e3aa4a74f1a825b.jpg',
-								'https://images-na.ssl-images-amazon.com/images/I/61GkXdZ-GvL._SY300_QL70_.jpg'
+							let poptarts = ['https://i.imgur.com/oe7QRAO.png',
+								'https://i.imgur.com/Rfe1DQK.png',
+								'https://i.imgur.com/PGROXYh.png',
+								'https://i.imgur.com/06haJcC.png',
+								'https://i.imgur.com/yzTqGyx.png',
+								'https://i.imgur.com/dCPHlv8.png',
+								'https://i.imgur.com/ZvCRNS2.png',
+								'https://i.imgur.com/buTEr8Y.png',
+								'https://i.imgur.com/si3DNR6.png'
 							]
-							let drinks = ['https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRAwI9Db5c-fxdBiWn-ErVO2m3zzp96Cdgtv8f2iznymYhrK8CZcQ',
-								'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOTLkelJm9DpeR-7vXPejvhJCscxoGU6krzow-zHI-ZWcuFF5csQ',
-								'http://www.newhealthadvisor.com/images/1HT19185/soy-milk.gif',
-								'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRx3XE9LKfTGrppEV0oMcAejRwqAwMDAgOqEVDqtrwSVavqM0CDpA',
-								'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQhtwJK3rKLac82kKQJIqsOH9vW43aH4BK6v5tkP90uBUn3UylbevOXDpc'
+							let drinks = ['https://i.imgur.com/z2UWBeZ.png',
+								'https://i.imgur.com/cCaTqGH.png',
+								'https://i.imgur.com/EyFkzax.png',
+								'https://i.imgur.com/Q5Hf10B.png',
+								'https://i.imgur.com/mWFPQf6.png'
 							]
 
 							orderAuth.send('Your order should be arriving now!')
