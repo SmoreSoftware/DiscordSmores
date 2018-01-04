@@ -17,6 +17,7 @@ const oneLine = require('common-tags').oneLine;
 client.registry
 	.registerGroups([
 		['main', 'Main'],
+		['overrides', 'Worker Overrides'],
 		['misc', 'Miscellaneous'],
 		['support', 'Support'],
 		['control', 'Bot Owners Only'],
@@ -40,6 +41,8 @@ client.dispatcher.addInhibitor(msg => {
 });
 
 client.cooldown = [];
+
+client.workers = ['197891949913571329']
 
 client
 	.on('error', console.error)
@@ -191,6 +194,7 @@ function doOrders() {
 			const oArray = Object.values(orderDB)
 			//console.log(`oArray = \n${oArray}`)
 			oArray.forEach((o) => {
+				if (o.manual !== false) return
 				//console.log('Running forEach')
 				const orderAuth = client.users.get(o.userID)
 				const orderChan = client.channels.get(o.channelID)
@@ -201,6 +205,7 @@ function doOrders() {
 				let max = 2.59
 
 				if (o.status === 'Waiting') {
+					if (o.manual !== false) return
 					if (active.includes(o.orderID)) return
 					if (!active.includes(o.orderID)) {
 						active.push(o.orderID)
@@ -231,6 +236,7 @@ function doOrders() {
 								'guildID': o.guildID,
 								'channelID': o.channelID,
 								'order': o.order,
+								'manual': false,
 								'status': 'Cooking'
 							}
 
@@ -252,6 +258,7 @@ Show the following message to a developer:
 						}
 					}
 				} else if (o.status === 'Cooking') {
+					if (o.manual !== false) return
 					if (active.includes(o.orderID)) return
 					if (!active.includes(o.orderID)) {
 						active.push(o.orderID)
@@ -272,12 +279,12 @@ Show the following message to a developer:
 							'ILoveSmores#3256',
 							'CoolDeveloper#4035',
 							'YoMomma#9693',
-							'SpaceX#0276',
-							'jdenderplays#2316',
-							'ROM Typo#9462',
-							'TJDoesCode#6088',
-							'Chronomly6#8108',
-							'SmoreBot#0560'
+							'SpaceX#7569',
+							'jdenderplays#2952',
+							'ROM Typo#5920',
+							'TJDoesCode#7239',
+							'Chronomly6#8359',
+							'SmoreBot#4391'
 						]
 						chef = chef[Math.floor(Math.random() * chef.length)]
 						orderDB[o.orderID] = {
@@ -286,6 +293,7 @@ Show the following message to a developer:
 							'guildID': o.guildID,
 							'channelID': o.channelID,
 							'order': o.order,
+							'manual': false,
 							'status': 'Cooking'
 						}
 
@@ -316,6 +324,7 @@ Show the following message to a developer:
 								'guildID': o.guildID,
 								'channelID': o.channelID,
 								'order': o.order,
+								'manual': false,
 								'status': 'Awaiting delivery'
 							}
 
@@ -349,6 +358,7 @@ Show the following message to a developer:
 						}
 					}
 				} else if (o.status === 'Awaiting delivery') {
+					if (o.manual !== false) return
 					if (active.includes(o.orderID)) return
 					if (!active.includes(o.orderID)) {
 						active.push(o.orderID)
