@@ -44,6 +44,7 @@ module.exports = class CookCommand extends commando.Command {
 		fsn.readJSON('./orders.json')
 			.then((orderDB) => {
 				const o = orderDB[args.orderID]
+
 				//eslint-disable-next-line no-undefined
 				if (o === undefined) {
 					message.reply('Couldn\'t find that order. Please try again.')
@@ -52,7 +53,11 @@ module.exports = class CookCommand extends commando.Command {
 				}
 
 				const orderAuth = this.client.users.get(o.userID)
+				const orderChan = this.client.channels.get(o.channelID)
+				const orderGuild = this.client.guilds.get(o.guildID)
+				const oChan = this.client.channels.get('394031402758438912')
 				const deliveryChan = this.client.channels.get('398309128189247498')
+
 
 				if (o.status.toLowerCase() === 'waiting') {
 					message.reply('You must claim the order before you can cook it!')
@@ -73,6 +78,18 @@ module.exports = class CookCommand extends commando.Command {
 						'status': 'Cooking',
 						'chef': message.author.id
 					}
+					oChan.fetchMessages({
+						limit: 100
+					})
+					.then(msgs => {
+						let msg = msgs.filter(m => m.content.includes(o.orderID))
+						msg.first().edit(`__**Order**__
+**OrderID:** ${o.orderID}
+**Order:** ${o.order}
+**Customer:** ${orderAuth.tag} (${orderAuth.id})
+**Ordered from:** #${orderChan.name} (${orderChan.id}) in ${orderGuild.name} (${orderGuild.id})
+**Status:** Cooking`)
+					})
 
 					fsn.writeJSON('./orders.json', orderDB, {
 							replacer: null,
@@ -106,6 +123,18 @@ Contact a CEO and show them the following message:
 							'status': 'Awaiting Delivery',
 							'chef': o.chef
 						}
+						oChan.fetchMessages({
+							limit: 100
+						})
+						.then(msgs => {
+							let msg = msgs.filter(m => m.content.includes(o.orderID))
+							msg.first().edit(`__**Order**__
+	**OrderID:** ${o.orderID}
+	**Order:** ${o.order}
+	**Customer:** ${orderAuth.tag} (${orderAuth.id})
+	**Ordered from:** #${orderChan.name} (${orderChan.id}) in ${orderGuild.name} (${orderGuild.id})
+	**Status:** Awaiting delivery`)
+						})
 
 						fsn.writeJSON('./orders.json', orderDB, {
 								replacer: null,
