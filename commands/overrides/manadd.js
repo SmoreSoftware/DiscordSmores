@@ -23,8 +23,8 @@ module.exports = class ClaimCommand extends commando.Command {
 					infinite: false
 				},
 				{
-					key: 'orderAuth',
-					label: 'orderAuth',
+					key: 'userID',
+					label: 'userID',
 					prompt: 'What is the user ID of the order\'s author?',
 					type: 'string',
 					infinite: false
@@ -115,8 +115,8 @@ module.exports = class ClaimCommand extends commando.Command {
 					.catch((err) => {
 						if (err) {
 							message.reply(`There was an error while writing to the database!
-  Contact a developer and show them the following message:
-  \`\`\`${err}\`\`\``)
+Show the following message to a developer:
+\`\`\`${err}\`\`\``)
 						}
 					})
 			})
