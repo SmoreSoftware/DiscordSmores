@@ -105,7 +105,7 @@ module.exports = class CookCommand extends commando.Command {
 						.catch((err) => {
 							if (err) {
 								message.reply(`There was an error while writing to the database!
-Contact a CEO and show them the following message:
+Show the the following message to a developer:
 \`\`\`${err}\`\`\``)
 							}
 						})
@@ -147,8 +147,8 @@ Contact a CEO and show them the following message:
 							.catch((err) => {
 								if (err) {
 									message.reply(`There was an error while writing to the database!
-	Contact a CEO and show them the following message:
-	\`\`\`${err}\`\`\``)
+Show the following message to a developer:
+\`\`\`${err}\`\`\``)
 								}
 							})
 					}

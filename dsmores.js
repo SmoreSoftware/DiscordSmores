@@ -204,7 +204,7 @@ function doOrders() {
 				let min = 0.59
 				let max = 2.59
 
-				if (o.status === 'Waiting') {
+				if (o.status.toLowerCase() === 'waiting') {
 					if (o.manual !== false) return
 					if (active.includes(o.orderID)) return
 					if (!active.includes(o.orderID)) {
@@ -257,7 +257,7 @@ Show the following message to a developer:
 							active.splice(oIndex, 1)
 						}
 					}
-				} else if (o.status === 'Cooking') {
+				} else if (o.status.toLowerCase() === 'cooking') {
 					if (o.manual !== false) return
 					if (active.includes(o.orderID)) return
 					if (!active.includes(o.orderID)) {
@@ -357,7 +357,7 @@ Show the following message to a developer:
 							active.splice(oIndex, 1)
 						}
 					}
-				} else if (o.status === 'Awaiting delivery') {
+				} else if (o.status.toLowerCase() === 'awaiting delivery') {
 					if (o.manual !== false) return
 					if (active.includes(o.orderID)) return
 					if (!active.includes(o.orderID)) {

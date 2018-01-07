@@ -91,8 +91,8 @@ module.exports = class ClaimCommand extends commando.Command {
             .catch((err) => {
               if (err) {
                 message.reply(`There was an error while writing to the database!
-  Contact a developer and show them the following message:
-  \`\`\`${err}\`\`\``)
+Show the following message to a developer:
+\`\`\`${err}\`\`\``)
               }
 						})
         } else if (o.status.toLowerCase() === 'claimed') {
@@ -138,7 +138,7 @@ module.exports = class ClaimCommand extends commando.Command {
 					.catch((err) => {
 						if (err) {
 							message.reply(`There was an error while writing to the database!
-Contact a developer and show them the following message:
+Show the following message to a developer:
 \`\`\`${err}\`\`\``)
 						}
 					})
