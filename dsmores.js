@@ -9,6 +9,7 @@ const client = new commando.Client({
 const { RichEmbed } = require('discord.js');
 const fs = require('fs');
 const fsn = require('fs-nextra');
+const ms = require('ms');
 const path = require('path');
 const sqlite = require('sqlite');
 const request = require('superagent');
@@ -192,8 +193,9 @@ function doOrders() {
 		.then((orderDB) => {
 			//console.log(`OrderDB = \n${orderDB}`)
 			const oArray = Object.values(orderDB)
-			//console.log(`oArray = \n${oArray}`)
+			//console.log(`oArray = \n${JSON.stringify(oArray)}`)
 			oArray.forEach((o) => {
+				if (Object.prototype.hasOwnProperty.call(orderDB, `${o.orderID}`) === false) return
 				if (o.manual !== false) return
 				//console.log('Running forEach')
 				const orderAuth = client.users.get(o.userID)
@@ -225,8 +227,8 @@ function doOrders() {
 						time = time.replace('.', '')
 						time += '0000'
 						console.log(`Order: ${o.orderID}
-Status: Awaiting Chef
-Time until claimed: ${time}ms`)
+	Status: Awaiting chef
+	Time until claimed: ${ms(parseInt(time))} (${time})`)
 						//eslint-disable-next-line no-use-before-define
 						setTimeout(cook, time)
 
@@ -417,10 +419,13 @@ Show the following message to a developer:
 					}
 				} else if (o.status.toLowerCase() === 'awaiting delivery') {
 					//console.log('Handling orders awaiting delivery')
+					//eslint-disable-next-line no-sync
+					const orderDB2 = JSON.parse(fs.readFileSync('./orders.json', 'utf8'))
+					if (Object.prototype.hasOwnProperty.call(orderDB2, `${o.orderID}`) === false) return
 					if (o.manual !== false) return
 					if (active.includes(o.orderID)) return
 					if (!active.includes(o.orderID)) {
-						console.log(`Order ${o.orderID} is ready to be handled, continuing`)
+						//console.log(`Order ${o.orderID} is ready to be handled, continuing`)
 						active.push(o.orderID)
 						orderAuth.send('Your order has been cooked and will be delivered soon!')
 
@@ -428,14 +433,16 @@ Show the following message to a developer:
 						//let time2 = (Math.random() * (30000 - 59000) + 30000).toFixed(1)
 						let time2 = 45000
 						console.log(`Order: ${o.orderID}
-Status: Awaiting Delivery
-Time until delivered: ${time2}ms`)
-
+	Status: Awaiting delivery
+	Time until delivered: ${ms(time2)} (${time2})`)
 						//eslint-disable-next-line no-use-before-define
 						setTimeout(sendToCustomer, time2)
 
 						//eslint-disable-next-line no-inner-declarations
 						function sendToCustomer() {
+							//eslint-disable-next-line no-sync
+							const orderDB3 = JSON.parse(fs.readFileSync('./orders.json', 'utf8'))
+							if (Object.prototype.hasOwnProperty.call(orderDB3, `${o.orderID}`) === false) return
 							let smores = ['https://i.imgur.com/eh93oM9.png',
 								'https://i.imgur.com/DvoQEdX.png',
 								'https://i.imgur.com/zdsGDa4.png',
