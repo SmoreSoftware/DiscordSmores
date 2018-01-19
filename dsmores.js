@@ -205,9 +205,11 @@ function doOrders() {
 				let max = 2.59
 
 				if (o.status.toLowerCase() === 'waiting') {
+					//console.log('Handling waiting orders')
 					if (o.manual !== false) return
 					if (active.includes(o.orderID)) return
 					if (!active.includes(o.orderID)) {
+						//console.log(`Order ${o.orderID} is ready to be handled, continuing`)
 						active.push(o.orderID)
 						//eslint-disable-next-line
 						function getRandomInt(min, max) {
@@ -223,13 +225,14 @@ function doOrders() {
 						time = time.replace('.', '')
 						time += '0000'
 						console.log(`Order: ${o.orderID}
-	Status: Awaiting Chef
-	Time until claimed: ${time}ms`)
+Status: Awaiting Chef
+Time until claimed: ${time}ms`)
 						//eslint-disable-next-line no-use-before-define
 						setTimeout(cook, time)
 
 						//eslint-disable-next-line no-inner-declarations
 						function cook() {
+							console.log('Running cook')
 							orderDB[o.orderID] = {
 								'orderID': o.orderID,
 								'userID': o.userID,
@@ -258,22 +261,51 @@ Show the following message to a developer:
 						}
 					}
 				} else if (o.status.toLowerCase() === 'cooking') {
+					//console.log('Handling cooking orders')
 					if (o.manual !== false) return
 					if (active.includes(o.orderID)) return
 					if (!active.includes(o.orderID)) {
+						//console.log(`Order ${o.orderID} is ready to be handled, continuing`)
 						active.push(o.orderID)
-						oChan.fetchMessages({
+
+						try {
+							oChan.fetchMessages({
 								limit: 100
-							})
-							.then(msgs => {
+							}).then(msgs => {
 								let msg = msgs.filter(m => m.content.includes(o.orderID))
-								msg.first().edit(`__**Order**__
+								msg = msg.first()
+								//eslint-disable-next-line
+								if (msg !== undefined) {
+									//eslint-disable-next-line no-use-before-define
+									updateMsg()
+								} else {
+									console.error(`Couldn't update oChan for order ${o.orderID}`)
+									oChan.send(`Couldn't update oChan for order ${o.orderID}`)
+								}
+							})
+						} catch (err) {
+							console.error(`Couldn't update oChan for order ${o.orderID} \nNew status: \`Cooking\``)
+							console.error(`Error with ${o.orderID} \n${err}`)
+							oChan.send(`Couldn't update oChan for order ${o.orderID} \nNew status: \`Cooking\` \nCheck console`)
+						}
+
+						//eslint-disable-next-line no-inner-declarations
+						function updateMsg() {
+							console.log(`Running updateMsg on ${o.orderID}`)
+							oChan.fetchMessages({
+									limit: 100
+								})
+								.then(msgs => {
+									let msg = msgs.filter(m => m.content.includes(o.orderID))
+									msg.first().edit(`__**Order**__
 **OrderID:** ${o.orderID}
 **Order:** ${o.order}
 **Customer:** ${orderAuth.tag} (${orderAuth.id})
 **Ordered from:** #${orderChan.name} (${orderChan.id}) in ${orderGuild.name} (${orderGuild.id})
 **Status:** Cooking`)
-							})
+								})
+						}
+
 						let chef = ['Bob#1234',
 							'MellissaGamer#4076',
 							'ILoveSmores#3256',
@@ -318,6 +350,7 @@ Show the following message to a developer:
 
 						//eslint-disable-next-line no-inner-declarations
 						function deliver() {
+							//console.log('Running deliver')
 							orderDB[o.orderID] = {
 								'orderID': o.orderID,
 								'userID': o.userID,
@@ -341,26 +374,53 @@ Show the following message to a developer:
 									}
 								})
 
-							oChan.fetchMessages({
+							try {
+								oChan.fetchMessages({
 									limit: 100
-								})
-								.then(msgs => {
+								}).then(msgs => {
 									let msg = msgs.filter(m => m.content.includes(o.orderID))
-									msg.first().edit(`__**Order**__
+									msg = msg.first()
+									//eslint-disable-next-line
+									if (msg !== undefined) {
+										//eslint-disable-next-line no-use-before-define
+										updateMsg()
+									} else {
+										console.error(`Couldn't update oChan for order ${o.orderID}`)
+										oChan.send(`Couldn't update oChan for order ${o.orderID}`)
+									}
+								})
+							} catch (err) {
+								console.error(`Couldn't update oChan for order ${o.orderID} \nNew status: \`Awaiting delivery\``)
+								console.error(`Error with ${o.orderID} \n${err}`)
+								oChan.send(`Couldn't update oChan for order ${o.orderID} \nNew status: \`Awaiting delivery\` \nCheck console`)
+							}
+
+							//eslint-disable-next-line no-inner-declarations
+							function updateMsg() {
+								console.log(`Running updateMsg on ${o.orderID}`)
+								oChan.fetchMessages({
+										limit: 100
+									})
+									.then(msgs => {
+										let msg = msgs.filter(m => m.content.includes(o.orderID))
+										msg.first().edit(`__**Order**__
 **OrderID:** ${o.orderID}
 **Order:** ${o.order}
 **Customer:** ${orderAuth.tag} (${orderAuth.id})
 **Ordered from:** #${orderChan.name} (${orderChan.id}) in ${orderGuild.name} (${orderGuild.id})
 **Status:** Awaiting delivery`)
-								})
+									})
+							}
 							let oIndex = active.indexOf(o.orderID)
 							active.splice(oIndex, 1)
 						}
 					}
 				} else if (o.status.toLowerCase() === 'awaiting delivery') {
+					//console.log('Handling orders awaiting delivery')
 					if (o.manual !== false) return
 					if (active.includes(o.orderID)) return
 					if (!active.includes(o.orderID)) {
+						console.log(`Order ${o.orderID} is ready to be handled, continuing`)
 						active.push(o.orderID)
 						orderAuth.send('Your order has been cooked and will be delivered soon!')
 
@@ -368,8 +428,8 @@ Show the following message to a developer:
 						//let time2 = (Math.random() * (30000 - 59000) + 30000).toFixed(1)
 						let time2 = 45000
 						console.log(`Order: ${o.orderID}
-	Status: Awaiting Delivery
-	Time until delivered: ${time2}ms`)
+Status: Awaiting Delivery
+Time until delivered: ${time2}ms`)
 
 						//eslint-disable-next-line no-use-before-define
 						setTimeout(sendToCustomer, time2)
