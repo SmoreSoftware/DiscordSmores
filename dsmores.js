@@ -207,6 +207,9 @@ function doOrders() {
 				let max = 2.59
 
 				if (o.status.toLowerCase() === 'waiting') {
+					//eslint-disable-next-line no-sync
+					const orderDB2 = JSON.parse(fs.readFileSync('./orders.json', 'utf8'))
+					if (Object.prototype.hasOwnProperty.call(orderDB2, `${o.orderID}`) === false) return
 					//console.log('Handling waiting orders')
 					if (o.manual !== false) return
 					if (active.includes(o.orderID)) return
@@ -234,7 +237,10 @@ function doOrders() {
 
 						//eslint-disable-next-line no-inner-declarations
 						function cook() {
-							console.log('Running cook')
+							//console.log('Running cook')
+							//eslint-disable-next-line no-sync
+							const orderDB3 = JSON.parse(fs.readFileSync('./orders.json', 'utf8'))
+							if (Object.prototype.hasOwnProperty.call(orderDB3, `${o.orderID}`) === false) return
 							orderDB[o.orderID] = {
 								'orderID': o.orderID,
 								'userID': o.userID,
@@ -263,6 +269,9 @@ Show the following message to a developer:
 						}
 					}
 				} else if (o.status.toLowerCase() === 'cooking') {
+					//eslint-disable-next-line no-sync
+					const orderDB2 = JSON.parse(fs.readFileSync('./orders.json', 'utf8'))
+					if (Object.prototype.hasOwnProperty.call(orderDB2, `${o.orderID}`) === false) return
 					//console.log('Handling cooking orders')
 					if (o.manual !== false) return
 					if (active.includes(o.orderID)) return
@@ -336,10 +345,9 @@ Show the following message to a developer:
 								spaces: 2
 							})
 							.then(() => {
-								orderAuth.send(`Your order has been put in the oven by chef ${chef}`)
-								orderAuth.send('Cooking will take 3 minutes.')
+								orderAuth.send(`Your order has been put in the oven by chef ${chef}. Cooking will take 3 minutes.`)
 								//eslint-disable-next-line no-use-before-define
-								setTimeout(deliver, 180000)
+								setTimeout(checkDelivery, 180000)
 							})
 							.catch((err) => {
 								if (err) {
@@ -351,8 +359,26 @@ Show the following message to a developer:
 							})
 
 						//eslint-disable-next-line no-inner-declarations
+						function checkDelivery() {
+							//console.log('Running checkDelivery')
+							//eslint-disable-next-line no-sync
+							const testODB = JSON.parse(fs.readFileSync('./orders.json', 'utf8'))
+							//eslint-disable-next-line no-useless-return
+							if (Object.prototype.hasOwnProperty.call(testODB, `${o.orderID}`) === false) return
+							else if (Object.prototype.hasOwnProperty.call(testODB, `${o.orderID}`) === true) {
+								console.log(`Order ${o.orderID} passed delivery check`)
+								//eslint-disable-next-line no-use-before-define
+								deliver()
+							}
+						}
+
+						//eslint-disable-next-line no-inner-declarations
 						function deliver() {
 							//console.log('Running deliver')
+							//eslint-disable-next-line no-sync
+							const orderDB3 = JSON.parse(fs.readFileSync('./orders.json', 'utf8'))
+							if (Object.prototype.hasOwnProperty.call(orderDB3, `${o.orderID}`) === false) return
+
 							orderDB[o.orderID] = {
 								'orderID': o.orderID,
 								'userID': o.userID,
@@ -440,6 +466,7 @@ Show the following message to a developer:
 
 						//eslint-disable-next-line no-inner-declarations
 						function sendToCustomer() {
+							//console.log(running SendToCustomer)
 							//eslint-disable-next-line no-sync
 							const orderDB3 = JSON.parse(fs.readFileSync('./orders.json', 'utf8'))
 							if (Object.prototype.hasOwnProperty.call(orderDB3, `${o.orderID}`) === false) return
