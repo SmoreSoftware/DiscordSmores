@@ -41,7 +41,8 @@ client.dispatcher.addInhibitor(msg => {
   if (blacklist.users.includes(msg.author.id)) return [`User ${msg.author.id} is blacklisted`, msg.reply('You have been blacklisted. Appeal here: https://discord.gg/6P6MNAU')];
 });
 
-client.cooldown = [];
+client.cooldown = []
+client.usedIDs = []
 
 client.workers = ['197891949913571329']
 
@@ -208,9 +209,10 @@ function doOrders() {
 
         if (o.status.toLowerCase() === 'waiting') {
           //eslint-disable-next-line no-sync
-          const orderDB2 = JSON.parse(fs.readFileSync('./orders.json', 'utf8'))
-          if (Object.prototype.hasOwnProperty.call(orderDB2, `${o.orderID}`) === false) return
+          //const orderDB2 = JSON.parse(fs.readFileSync('./orders2.json', 'utf8'))
+          //if (Object.prototype.hasOwnProperty.call(orderDB2, `${o.orderID}`) === false) return
           //console.log('Handling waiting orders')
+          if (!client.usedIDs.includes(o.orderID)) return
           if (o.manual !== false) return
           if (active.includes(o.orderID)) return
           if (!active.includes(o.orderID)) {
@@ -239,8 +241,9 @@ function doOrders() {
             function cook() {
               //console.log('Running cook')
               //eslint-disable-next-line no-sync
-              const orderDB3 = JSON.parse(fs.readFileSync('./orders.json', 'utf8'))
-              if (Object.prototype.hasOwnProperty.call(orderDB3, `${o.orderID}`) === false) return
+              //const orderDB3 = JSON.parse(fs.readFileSync('./orders2.json', 'utf8'))
+              //if (Object.prototype.hasOwnProperty.call(orderDB3, `${o.orderID}`) === false) return
+              if (!client.usedIDs.includes(o.orderID)) return
               orderDB[o.orderID] = {
                 'orderID': o.orderID,
                 'userID': o.userID,
@@ -270,9 +273,10 @@ Show the following message to a developer:
           }
         } else if (o.status.toLowerCase() === 'cooking') {
           //eslint-disable-next-line no-sync
-          const orderDB2 = JSON.parse(fs.readFileSync('./orders.json', 'utf8'))
-          if (Object.prototype.hasOwnProperty.call(orderDB2, `${o.orderID}`) === false) return
+          //const orderDB2 = JSON.parse(fs.readFileSync('./orders2.json', 'utf8'))
+          //if (Object.prototype.hasOwnProperty.call(orderDB2, `${o.orderID}`) === false) return
           //console.log('Handling cooking orders')
+          if (!client.usedIDs.includes(o.orderID)) return
           if (o.manual !== false) return
           if (active.includes(o.orderID)) return
           if (!active.includes(o.orderID)) {
@@ -362,10 +366,10 @@ Show the following message to a developer:
             function checkDelivery() {
               //console.log('Running checkDelivery')
               //eslint-disable-next-line no-sync
-              const testODB = JSON.parse(fs.readFileSync('./orders.json', 'utf8'))
+              //const testODB = JSON.parse(fs.readFileSync('./orders2.json', 'utf8'))
               //eslint-disable-next-line no-useless-return
-              if (Object.prototype.hasOwnProperty.call(testODB, `${o.orderID}`) === false) return
-              else if (Object.prototype.hasOwnProperty.call(testODB, `${o.orderID}`) === true) {
+              if (!client.usedIDs.includes(o.orderID)) return
+              else if (client.usedIDs.includes(o.orderID)) {
                 console.log(`Order ${o.orderID} passed delivery check`)
                 //eslint-disable-next-line no-use-before-define
                 deliver()
@@ -376,8 +380,9 @@ Show the following message to a developer:
             function deliver() {
               //console.log('Running deliver')
               //eslint-disable-next-line no-sync
-              const orderDB3 = JSON.parse(fs.readFileSync('./orders.json', 'utf8'))
-              if (Object.prototype.hasOwnProperty.call(orderDB3, `${o.orderID}`) === false) return
+              //const orderDB3 = JSON.parse(fs.readFileSync('./orders2.json', 'utf8'))
+              //if (Object.prototype.hasOwnProperty.call(orderDB3, `${o.orderID}`) === false) return
+              if (!client.usedIDs.includes(o.orderID)) return
 
               orderDB[o.orderID] = {
                 'orderID': o.orderID,
@@ -446,8 +451,9 @@ Show the following message to a developer:
         } else if (o.status.toLowerCase() === 'awaiting delivery') {
           //console.log('Handling orders awaiting delivery')
           //eslint-disable-next-line no-sync
-          const orderDB2 = JSON.parse(fs.readFileSync('./orders.json', 'utf8'))
-          if (Object.prototype.hasOwnProperty.call(orderDB2, `${o.orderID}`) === false) return
+          //const orderDB2 = JSON.parse(fs.readFileSync('./orders2.json', 'utf8'))
+          //if (Object.prototype.hasOwnProperty.call(orderDB2, `${o.orderID}`) === false) return
+          if (!client.usedIDs.includes(o.orderID)) return
           if (o.manual !== false) return
           if (active.includes(o.orderID)) return
           if (!active.includes(o.orderID)) {
@@ -468,8 +474,9 @@ Show the following message to a developer:
             function sendToCustomer() {
               //console.log(running SendToCustomer)
               //eslint-disable-next-line no-sync
-              const orderDB3 = JSON.parse(fs.readFileSync('./orders.json', 'utf8'))
-              if (Object.prototype.hasOwnProperty.call(orderDB3, `${o.orderID}`) === false) return
+              //const orderDB3 = JSON.parse(fs.readFileSync('./orders2.json', 'utf8'))
+              //if (Object.prototype.hasOwnProperty.call(orderDB3, `${o.orderID}`) === false) return
+              if (!client.usedIDs.includes(o.orderID)) return
               let smores = ['https://i.imgur.com/eh93oM9.png',
                 'https://i.imgur.com/DvoQEdX.png',
                 'https://i.imgur.com/zdsGDa4.png',
@@ -495,7 +502,7 @@ Show the following message to a developer:
 
               orderAuth.send('Your order should be arriving now!')
               if (o.order.toLowerCase().includes('smore') || o.order.toLowerCase().includes('s\'more') || o.order.toLowerCase().includes('smores') || o.order.toLowerCase().includes('s\'mores')) {
-                orderChan.send(`${orderAuth} Your order has arrived!`)
+                orderChan.send(`${orderAuth} Your order (\`${o.orderID}\`) has arrived!`)
                 //eslint-disable-next-line no-negated-condition
                 if (!o.order.toLowerCase().includes('6')) {
                   orderChan.send(smores[parseInt(o.order.split(' ').slice(1)) - 1])
@@ -527,10 +534,12 @@ Show the following message to a developer:
                     msg.first().delete(1)
                   })
 
+                let idIndex = client.usedIDs.indexOf(o.orderID)
+                client.usedIDs.splice(idIndex, 1)
                 let oIndex = active.indexOf(o.orderID)
                 active.splice(oIndex, 1)
               } else if (o.order.toLowerCase().includes('poptart') || o.order.toLowerCase().includes('poptarts') || o.order.toLowerCase().includes('pop-tart') || o.order.toLowerCase().includes('pop-tarts')) {
-                orderChan.send(`${orderAuth} Your order has arrived!`)
+                orderChan.send(`${orderAuth} Your order (\`${o.orderID}\`) has arrived!`)
                 //eslint-disable-next-line no-negated-condition
                 if (!o.order.toLowerCase().includes('10')) {
                   orderChan.send(poptarts[parseInt(o.order.split(' ').slice(1)) - 1])
@@ -562,10 +571,12 @@ Show the following message to a developer:
                     msg.first().delete(1)
                   })
 
+                let idIndex = client.usedIDs.indexOf(o.orderID)
+                client.usedIDs.splice(idIndex, 1)
                 let oIndex = active.indexOf(o.orderID)
                 active.splice(oIndex, 1)
               } else if (o.order.toLowerCase().includes('drink') || o.order.toLowerCase().includes('drinks') || o.order.toLowerCase().includes('beverage') || o.order.toLowerCase().includes('beverages')) {
-                orderChan.send(`${orderAuth} Your order has arrived!`)
+                orderChan.send(`${orderAuth} Your order (\`${o.orderID}\`) has arrived!`)
                 orderChan.send(drinks[parseInt(o.order.split(' ').slice(1)) - 1])
                 let userIndex = client.cooldown.indexOf(orderAuth.id)
                 client.cooldown.splice(userIndex, 1)
@@ -592,10 +603,12 @@ Show the following message to a developer:
                     msg.first().delete(1)
                   })
 
+                let idIndex = client.usedIDs.indexOf(o.orderID)
+                client.usedIDs.splice(idIndex, 1)
                 let oIndex = active.indexOf(o.orderID)
                 active.splice(oIndex, 1)
               } else {
-                orderChan.send(`${orderAuth} Your order had an issue and has not arrived properly.`)
+                orderChan.send(`${orderAuth} Your order (\`${o.orderID}\`) had an issue and has not arrived properly.`)
                 orderChan.send(`Do \`${orderGuild.commandPrefix}hq\` to get a list of ways to contact the developers.`)
                 orderChan.send('We apoligize for any inconvinience.')
                 let userIndex = client.cooldown.indexOf(orderAuth.id)
@@ -623,6 +636,8 @@ Show the following message to a developer:
                     msg.first().delete(1)
                   })
 
+                let idIndex = client.usedIDs.indexOf(o.orderID)
+                client.usedIDs.splice(idIndex, 1)
                 let oIndex = active.indexOf(o.orderID)
                 active.splice(oIndex, 1)
               }

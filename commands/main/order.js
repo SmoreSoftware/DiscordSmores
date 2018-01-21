@@ -86,10 +86,7 @@ Please contact a developer.`)
             spaces: 2
           })
           .then(() => {
-            fsn.writeJSON('./orders2.json', orderDB, {
-              replacer: null,
-              spaces: 2
-            })
+            this.client.usedIDs.push(orderID)
             message.reply(`Your order has been sent to Discord S'mores! Your order ID is \`${orderID}\`\nPlease note this may take up to 9 minutes to cook and deliver.`)
             let ordersChan = this.client.channels.get('394031402758438912')
             ordersChan.send(`__**Order**__
