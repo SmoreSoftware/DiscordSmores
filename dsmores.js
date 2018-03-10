@@ -174,21 +174,6 @@ let active = []
 
 function doOrders() {
   //console.log('Handling orders')
-  try {
-    //eslint-disable-next-line no-sync
-    JSON.parse(fs.readFileSync('./orders.json', 'utf8'))
-  } catch (err) {
-    console.error(err)
-    client.user.setPresence({
-      status: 'dnd',
-      game: {
-        name: 'Orders temporarily broken',
-        type: 0
-      }
-    })
-    //eslint-disable-next-line no-useless-return
-    return
-  }
 
   fsn.readJSON('./orders.json')
     .then((orderDB) => {
