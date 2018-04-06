@@ -23,12 +23,6 @@ module.exports = class InfoCommand extends commando.Command {
 
   //eslint-disable-next-line class-methods-use-this
   async run(message) {
-		let host
-    if (os.hostname() === 'ubuntuServer') {
-      host = 'Kaydax'
-    } else {
-      host = 'local dev instance'
-    }
     const embed = new RichEmbed()
       .setAuthor(this.client.user.username, this.client.user.avatarURL)
       .setColor(0x0099cc)
@@ -36,7 +30,7 @@ module.exports = class InfoCommand extends commando.Command {
       .addField('Main information:', 'I am a Discord Bot made in **JavaScript** using the Discord API Wrapper **Discord.js** on the framework **Discord.js-Commando**', false)
       .addField('Developers:', '• Chronomly • TJDoesCode •', false)
       .addField('Server Count:', `${this.client.guilds.size}`, true)
-      .addField('Host', host, true)
+      .addField('Host', 'Heroku', true)
       .setTimestamp()
     message.channel.send({ embed })
   }
