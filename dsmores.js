@@ -59,7 +59,7 @@ client
       })
       .end();
     console.log('DBotsList guild count updated.')
-    const dbotsToken2 = process.env.dbotetoken2
+    const dbotsToken2 = process.env.dbotstoken2
     request.post(`https://bots.discord.pw/api/bots/${client.user.id}/stats`)
       .set('Authorization', dbotsToken2)
       .send({
