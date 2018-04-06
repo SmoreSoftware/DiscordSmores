@@ -1,9 +1,8 @@
 //eslint-disable-next-line
 const commando = require('discord.js-commando');
-const config = require('./config.json');
 const client = new commando.Client({
   owner: ['197891949913571329', '251383432331001856', '156019409658314752'],
-  commandPrefix: config.prefix,
+  commandPrefix: process.env.prefix,
   unknownCommandResponse: false
 });
 const { RichEmbed } = require('discord.js');
@@ -51,8 +50,8 @@ client
   .on('warn', console.warn)
   .on('debug', console.log)
   .on('ready', () => {
-    console.log(`Client ready; logged in as ${client.user.tag} (${client.user.id}) with prefix ${config.prefix}`)
-    const dbotsToken1 = config.dbotstoken1
+    console.log(`Client ready; logged in as ${client.user.tag} (${client.user.id}) with prefix ${process.env.prefix}`)
+    const dbotsToken1 = process.env.dbotstoken1
     request.post(`https://discordbots.org/api/bots/${client.user.id}/stats`)
       .set('Authorization', dbotsToken1)
       .send({
@@ -60,7 +59,7 @@ client
       })
       .end();
     console.log('DBotsList guild count updated.')
-    const dbotsToken2 = config.dbotstoken2
+    const dbotsToken2 = process.env.dbotetoken2
     request.post(`https://bots.discord.pw/api/bots/${client.user.id}/stats`)
       .set('Authorization', dbotsToken2)
       .send({
@@ -70,7 +69,7 @@ client
     console.log('DBots guild count updated.')
     client.user.setPresence({
       game: {
-        name: `${config.prefix}help | ${client.guilds.size} servers`,
+        name: `${process.env.prefix}help | ${client.guilds.size} servers`,
         type: 0
       }
     })
@@ -139,7 +138,7 @@ Now on: ${client.guilds.size} servers`)
       //eslint-disable-next-line newline-before-return
       return
     }
-    client.user.setGame(`${config.prefix}help | ${client.guilds.size} servers`)
+    client.user.setGame(`${process.env.prefix}help | ${client.guilds.size} servers`)
     guild.settings.set('announcements', 'on')
     const embed = new RichEmbed()
       .setAuthor(client.user.username, client.user.avatarURL)
@@ -636,7 +635,7 @@ Show the following message to a developer:
 setInterval(doOrders, 10000)
 
 
-client.login(config.token).catch(console.error);
+client.login(process.env.token).catch(console.error);
 
 process.on('unhandledRejection', err => {
   console.error('Uncaught Promise Error: \n' + err.stack);
