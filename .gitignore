@@ -1,6 +1,5 @@
 # CONFIG JSON'S
 config.json
-orders.json
 
 #Settigs db
 settings.sqlite3
