@@ -23,7 +23,7 @@ module.exports = class SupportCommand extends commando.Command {
 
   async run(message) {
     let isEnabled
-    let avatarURL = message.author.avatar ? message.author.avatarURL : avatarURL = 'https://discordapp.com/assets/0e291f67c9274a1abdddeb3fd919cbaa.png'
+    let avatarURL = message.author.avatar ? message.author.avatarURL : 'https://discordapp.com/assets/0e291f67c9274a1abdddeb3fd919cbaa.png'
     const client = this.client
     message.reply('Thank you for contacting SmoreBot Support! If there are any available support representatives, they will contact you soon.')
     let chan = message.channel
