@@ -4,9 +4,6 @@ config.json
 #Settigs db
 settings.sqlite3
 
-#ignore ffmpeg
-ffmpeg.exe
-
 # Logs
 logs
 *.log
