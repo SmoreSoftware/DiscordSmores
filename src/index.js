@@ -14,12 +14,12 @@ class DSmoresClient extends AkairoClient {
 const client = new DSmoresClient();
 
 client.on("ready", () => {
-	// this.commandHandler = new CommandHandler(this, {
-	// directory: "./commands/",
-	// prefix: config.prefix
-	// });
+	this.commandHandler = new CommandHandler(this, {
+		directory: "./commands/",
+		prefix: config.prefix
+	});
 
-	// this.commandHandler.loadAll();
+	this.commandHandler.loadAll();
 
 	// eslint-disable-next-line no-console
 	console.log(`Logged in as ${client.user.tag} : ${client.user.id}
