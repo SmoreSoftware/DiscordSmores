@@ -1,11 +1,11 @@
-# CONFIG JSON'S
-config.json
+# Config files
+src/config/*.yaml
+src/config/*.yml
+src/config/*.json
+src/config/config.yml
 
-#Settigs db
+# Settings DB
 settings.sqlite3
-
-#ignore ffmpeg
-ffmpeg.exe
 
 # Logs
 logs
@@ -65,14 +65,3 @@ typings/
 
 # dotenv environment variables file
 .env
-
-#eslint stuff
-*.eslintrc
-*.eslintrc.*
-.eslintrc
-*.eslintignore
-*.eslintignore.*
-.eslintignore
-
-#Twit config
-twitconfig.js
