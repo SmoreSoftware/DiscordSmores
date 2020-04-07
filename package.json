@@ -17,14 +17,17 @@
       "email": "me@disilla.org"
     }
   ],
-  "main": "src/index.ts",
+  "main": "src/index",
   "scripts": {
     "lint": "eslint . --ext js,json",
     "lint:fix": "eslint . --ext js,json --fix",
     "start": "node ."
   },
   "dependencies": {
-    "discord.js": "^12.1.1"
+    "discord-akairo": "^8.0.0",
+    "discord.js": "^12.1.1",
+    "sqlite": "^4.0.5",
+    "yaml": "^1.8.3"
   },
   "devDependencies": {
     "eslint": "^5.15.3",
